@@ -4,35 +4,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-class MonomTest {
+class PolynomTest {
 
 	@Test
-	void testGetComp() {
+	void testPolynom() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	void testMonomDoubleInt() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testMonomMonom() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGet_coefficient() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testGet_power() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testDerivative() {
+	void testPolynomString() {
 		fail("Not yet implemented");
 	}
 
@@ -42,37 +22,67 @@ class MonomTest {
 	}
 
 	@Test
+	void testAddPolynom_able() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testAddMonom() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testSubstract() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testMultiplyPolynom_able() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testEqualsPolynom_able() {
+		fail("Not yet implemented");
+	}
+
+	@Test
 	void testIsZero() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	void testMonomString() {
+	void testRoot() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	void testAdd() {
+	void testCopy() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	void testMultipyMonom() {
+	void testDerivative() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	void testMultipyInt() {
+	void testArea() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testMultiplyMonom() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testIteretor() {
 		fail("Not yet implemented");
 	}
 
 	@Test
 	void testToString() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testEqualsMonom() {
 		fail("Not yet implemented");
 	}
 
