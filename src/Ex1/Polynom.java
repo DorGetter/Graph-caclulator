@@ -1,10 +1,10 @@
-package myMath;
+package Ex1;
 import java.util.*;
 import java.util.function.Predicate;
 
 import javax.management.RuntimeErrorException;
 
-import myMath.Monom;
+import Ex1.Monom;
 /**
  											**Class Explanation**
 * ---------------------------------------------------------------------------------------------------------------------

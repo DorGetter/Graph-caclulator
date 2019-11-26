@@ -1,5 +1,5 @@
 
-package myMath;
+package Ex1;
 
 import java.util.Comparator;
 import java.util.StringTokenizer;
