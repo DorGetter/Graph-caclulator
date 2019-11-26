@@ -7,6 +7,16 @@ import javax.management.RuntimeErrorException;
 import org.w3c.dom.ranges.RangeException;
 
 /**
+ * 
+ * 
+ * 
+ * 
+ * test test to test the test
+ * 
+ * 
+ * 
+ * 
+ * 
 											**Class Explanation**
 * ---------------------------------------------------------------------------------------------------------------------
 * This class represents a Monom OBJ- in form of ax^b .																	|
