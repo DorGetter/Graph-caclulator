@@ -275,10 +275,14 @@ public class Polynom implements Polynom_able{
 	* @param p1- Polynom to check if equal. 
 	*/
 	@Override
-	public boolean equals(Polynom_able p1) {
+	public boolean equals(Object p1) {
+		
+		if(p1 instanceof Polynom_able) {
+			throw new RuntimeException("Not the same OBJ");
+		}
 		
 		boolean flag = false;												// flag to know if a Monom from p1 is in this polynom
-		for(Iterator<Monom> m1 = p1.iteretor(); m1.hasNext();) {			// Iterating p1
+		for(Iterator<Monom> m1 = ((Polynom) p1).iteretor(); m1.hasNext();) {			// Iterating p1
 
 			for(Iterator<Monom> m2 = this.iteretor(); m2.hasNext();) {		// Iterating this polynom 
 				Monom temp1 = new Monom(m1.next());							// Temp Monom that will store the current Monom the iterator is pointing at from p1
@@ -520,6 +524,20 @@ public class Polynom implements Polynom_able{
 		}
 		return poly;
 	}
+	/**
+	 * 
+	 * 
+	 * 
+	 * Add description!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 */
+	@Override
+	public function initFromString(String s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
 /**
 											**Class Explanation**
 * ---------------------------------------------------------------------------------------------------------------------
@@ -559,6 +577,7 @@ public class Polynom implements Polynom_able{
 		}
 
 	}
+
 
 
 

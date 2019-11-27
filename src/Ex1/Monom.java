@@ -7,16 +7,6 @@ import javax.management.RuntimeErrorException;
 import org.w3c.dom.ranges.RangeException;
 
 /**
- * 
- * 
- * 
- * 
- * test test to test the test
- * check check to check the check
- * 
- * 
- * 
- * 
 											**Class Explanation**
 * ---------------------------------------------------------------------------------------------------------------------
 * This class represents a Monom OBJ- in form of ax^b .																	|
@@ -316,6 +306,24 @@ public class Monom implements function{
 		this._power = p;
 	}
 	private static Monom getNewZeroMonom() {return new Monom(ZERO);}
+
+	
+	
+	
+	
+	
+	//////////////////////////////////////////////////////Need to implement//////////////////////////////
+	@Override
+	public function initFromString(String s) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public function copy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 
