@@ -276,22 +276,25 @@ public class Monom implements function{
  * @return
  */
 	public boolean equals(Monom m) {
+		if(this == m) {
+			return true;
+		}
 		//case of zero coefficient.
-		if(m.get_coefficient() == 0 && this._coefficient == 0) { 
+		else if(m.get_coefficient() == 0 && this._coefficient == 0) { 
 			return true;
 		}
 		//case compare coefficient&&power.
 		else if(m.get_coefficient() == this._coefficient && m.get_power() == this._power) {
 			return true;
 		}
-		//case offset -epsilon 
-		else if(m.get_coefficient()-EPSILON == this._coefficient && m.get_power() == this._power) {
+		//cases offset epsilon 
+		else if((Math.abs(m.get_coefficient()-this._coefficient))<=EPSILON && m.get_power() == this._power) {
 			return true;
 		}
-		//case offset +epsilon 
-		else if(m.get_coefficient()+EPSILON == this._coefficient && m.get_power() == this._power) {
+		else if((Math.abs(this._coefficient-m.get_coefficient()))<=EPSILON && m.get_power() == this._power) {
 			return true;
 		}
+	
 		return false;
 	}
 	

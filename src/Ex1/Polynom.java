@@ -4,7 +4,6 @@ import java.util.function.Predicate;
 
 import javax.management.RuntimeErrorException;
 
-import Ex1.Monom;
 /**
  											**Class Explanation**
 * ---------------------------------------------------------------------------------------------------------------------
@@ -277,30 +276,26 @@ public class Polynom implements Polynom_able{
 	@Override
 	public boolean equals(Object p1) {
 		
-		if(p1 instanceof Polynom_able) {
+		if(!(p1 instanceof Polynom_able)) {
 			throw new RuntimeException("Not the same OBJ");
 		}
 		
 		boolean flag = false;												// flag to know if a Monom from p1 is in this polynom
-		for(Iterator<Monom> m1 = ((Polynom) p1).iteretor(); m1.hasNext();) {			// Iterating p1
-
-			for(Iterator<Monom> m2 = this.iteretor(); m2.hasNext();) {		// Iterating this polynom 
-				Monom temp1 = new Monom(m1.next());							// Temp Monom that will store the current Monom the iterator is pointing at from p1
-				Monom temp2 = new Monom(m2.next());							// Temp Monom that will store the current Monom the iterator is pointing at from this polynom
-				if(temp2.equals(temp1) && flag == false) {					// Using Monom equals function. Also if the flag is true the Monom is in this polynom
-					flag = true;											
-				}
+		Iterator<Monom> m1 = ((Polynom_able) p1).iteretor();
+		Iterator<Monom> m2 = this.iteretor();
+		while(m2.hasNext() && m1.hasNext()) {
+			
+			Monom temp1 = new Monom(m1.next());
+			Monom temp2 = new Monom(m2.next());
+			if (!temp1.equals(temp2)) {
+				return false; 
 			}
-			if(flag == false) {												// Flag is false meaning the current Monom from p1 was not found is this polynom
-				return false;							
-			}
-			else															// Otherwise reset the flag
-				flag = false;
-		}	
-
-		
-	return true;															//If passed all the loops: 			 return true.
-																
+			
+		}
+		if (m1.hasNext() || m2.hasNext())
+			return false; 
+					
+		return true;
 	}
 	
 	/**
@@ -346,12 +341,16 @@ public class Polynom implements Polynom_able{
 		if(eps<=0||eps>x1-x0) {throw new RuntimeException("EPSILON unvalid input");}		//Check valid eps input
 		else if (this.f(x0)*this.f(x1)>0) {													//Check if the function cuts the x axis.
 			throw new RuntimeException("Function Doesnt Rooted In Given Interval");			//If dosen't have will throw an exception.
+		}else if(this.f(x0)==0) {
+			return x0;
+		}else if(this.f(x1)==0) {
+			return x1;
 		}
 		
 		boolean flag = true;																//While loop condition.  
-		double mid = (x0+x1)/2;											
+		double mid =((x0+x1)/2);											
 		while(flag) {																
-			mid = (x0+x1)/2;																//Update mid.
+			mid = ((x0+x1)/2);																//Update mid.
 			if (this.f(mid)<0) {
 				if (this.f(mid)>=0-eps) {													//Checking which side of the interval to update.
 					return mid;
@@ -386,8 +385,8 @@ public class Polynom implements Polynom_able{
 	* *		Copying each Monom from Polynom Obj list to a new Polynom.  
 	* @return a Deep copy of Polynom.
 	*/
-	@Override
-	public Polynom_able copy() {
+	
+	public Polynom_able copy_func() {
 		Polynom_able new_poly = new Polynom();											//Constract a new polynom obj.
 		Iterator<Monom> m1 = this.iteretor();											//Call's the class Iterator.
 
@@ -398,6 +397,16 @@ public class Polynom implements Polynom_able{
 
 		return new_poly;
 	}
+	
+	public function copy() {
+		
+		function p1 = new Polynom();
+		p1.initFromString(this.toString());
+
+		return p1;
+	}
+	
+	
 	/**
 	* 						Derivative function:
 	* The function applys a derivative operation on the Polynom.
@@ -532,8 +541,10 @@ public class Polynom implements Polynom_able{
 	 */
 	@Override
 	public function initFromString(String s) {
-		// TODO Auto-generated method stub
-		return null;
+
+		function p1 = new Polynom(s);
+		
+		return p1;
 	}
 	
 	

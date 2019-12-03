@@ -42,7 +42,7 @@ class PolynomTest {
 	}
 
 	@Test
-	void testEqualsPolynom_able() {
+	void testEqualsObject() {
 		fail("Not yet implemented");
 	}
 
@@ -83,6 +83,11 @@ class PolynomTest {
 
 	@Test
 	void testToString() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testInitFromString() {
 		fail("Not yet implemented");
 	}
 

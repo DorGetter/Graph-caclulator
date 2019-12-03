@@ -13,6 +13,7 @@ class MonomTest {
 
 	@Test
 	void testMonomDoubleInt() {
+		
 		fail("Not yet implemented");
 	}
 
@@ -73,6 +74,16 @@ class MonomTest {
 
 	@Test
 	void testEqualsMonom() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testInitFromString() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testCopy() {
 		fail("Not yet implemented");
 	}
 
