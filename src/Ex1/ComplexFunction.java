@@ -2,15 +2,14 @@ package Ex1;
 
 public class ComplexFunction implements complex_function {
 
-	function left, right;
-	Operation op;
+	private function left, right;
+	private Operation op=Operation.None;
 	
+	private ComplexFunction() {}
 	
 	public ComplexFunction(function p1) {
-		
 		this.op = Operation.None;
 		this.left = p1;
-		
 	}
 	
 	public ComplexFunction(String op, function left, function right) {
@@ -71,7 +70,7 @@ public class ComplexFunction implements complex_function {
 			
 		case "comp":
 		case "Comp":
-			ComplexFunction cf6 = new ComplexFunction(Operation.None, left,right);
+			ComplexFunction cf6 = new ComplexFunction(Operation.Comp, left,right);
 			this.left = cf6.left;
 			this.right = cf6.right;
 			this.op = cf6.op;
@@ -182,8 +181,32 @@ public class ComplexFunction implements complex_function {
 
 	@Override
 	public function initFromString(String s) {
-
-		return null;
+		
+		if(!s.contains(",")) {
+			function func = new Polynom(s);
+			return func;
+		}
+		
+		String temp ="";
+		int i =0;
+		i = s.length()-2;
+		int j = 0;
+		String right_side = "";
+		String op_str = "";
+		
+		while(s.charAt(i) != ',') {
+			right_side = s.charAt(i)+""+right_side;
+			i--;
+		}
+		while(s.charAt(j) != '(') {
+			op_str+=s.charAt(j);
+			j++;
+		}
+		
+		
+		function cf = new ComplexFunction(op_str,initFromString(right_side), initFromString(s.substring(j+1,i)));
+		return cf;
+		
 	}
 
 	@Override
@@ -262,9 +285,10 @@ public class ComplexFunction implements complex_function {
 		return this.op;
 	}
 	
-	public String toString() {
-		if(left == null) {
-			return op+"("+"0"+","+right.toString()+")";
+	public String toString() { 
+		
+		if(op == Operation.None) {
+			return ""+this.left;
 		}
 		if(right == null) {
 			return op+"("+left.toString()+","+"0"+")";
