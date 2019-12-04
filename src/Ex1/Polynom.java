@@ -75,7 +75,13 @@ public class Polynom implements Polynom_able{
 	 */
 	public Polynom(String s) {
 		String temp = "";																	//Will contain the monoms during passing on the S- input string
-
+		
+		if(s == "") {
+			throw new RuntimeException("Empty string");
+		}else if(s.charAt(0)== '+') {
+			s = s.substring(1,s.length());
+		}
+		
 		for (int i = 0; i < s.length(); i++) {
 
 			if(s.charAt(i) == '+') {														//Breaking the String to monoms: searching "+" arithmetic opp.
@@ -84,7 +90,9 @@ public class Polynom implements Polynom_able{
 					this.add(m1);									
 					temp ="";																//initialized temp string.
 				}
-				catch (Exception e) {throw new RuntimeException("Not Valid Poly");}			//Isnt a Monom or Polynom Valid input.
+				catch (Exception e) {
+					System.out.println(s);
+					throw new RuntimeException("Not Valid Poly");}			//Isnt a Monom or Polynom Valid input.
 			}			
 			else if(s.charAt(i) == '-' && temp!="") 										//same as above but "-" arithmetic opperation 
 																							//between the Monoms.

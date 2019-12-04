@@ -183,7 +183,12 @@ public class ComplexFunction implements complex_function {
 	public function initFromString(String s) {
 		
 		if(!s.contains(",")) {
-			function func = new Polynom(s);
+			function func;
+			if(s.contains(" ")) {
+				func = new Polynom(s.replaceAll(" ", ""));
+			}else {
+				func = new Polynom(s);
+			}
 			return func;
 		}
 		
@@ -204,7 +209,7 @@ public class ComplexFunction implements complex_function {
 		}
 		
 		
-		function cf = new ComplexFunction(op_str,initFromString(right_side), initFromString(s.substring(j+1,i)));
+		function cf = new ComplexFunction(op_str, initFromString(s.substring(j+1,i)),initFromString(right_side));
 		return cf;
 		
 	}
