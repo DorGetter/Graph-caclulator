@@ -180,7 +180,7 @@ public class Polynom implements Polynom_able{
 		int i;																			//i= indexes the Monoms in the Polynom list.
 		for (i = 0; i < polylist.size(); i++) {
 
-			if(polylist.get(i).get_power() == m1 .get_power()) {						//case 1: same powers.
+			if(polylist.get(i).get_power() == m1.get_power()) {							//case 1: same powers.
 				polylist.get(i).add(m1);												//Using Monom Class add method for adding the two Monoms.
 				if(polylist.get(i).get_coefficient() == 0) {							//case 1.1: if after adding coefficient == 0 remove the Monom from the Polynom list.
 					polylist.remove(i);
@@ -514,8 +514,13 @@ public class Polynom implements Polynom_able{
 			}
 			else {																				
 				if(m2.get_coefficient()>0) {													//Case of sign of the Monom is Positive. Enter '+' 
-					if(m2.get_coefficient()==1) {													
-						poly += "+"+"x";														//If coefficient == 1 put 'x' in the string.
+					if(m2.get_coefficient()==1) {	
+						if(m2.get_power()==0) {
+							poly += "+"+m2.get_coefficient();
+						}
+						else {
+						poly += "+"+"x";
+						}														//If coefficient == 1 put 'x' in the string.
 						if(m2.get_power() != 0 && m2.get_power() != 1) {
 							poly +="^"+m2.get_power();											//Put '^' if rhe power of the Monom greater> 0.
 						}
@@ -529,7 +534,7 @@ public class Polynom implements Polynom_able{
 		}
 
 		if(poly == "") {																		//If the Polynom is empty situation.
-			return "";
+			return "0";
 		}
 		return poly;
 	}

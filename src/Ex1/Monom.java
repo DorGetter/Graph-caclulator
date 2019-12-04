@@ -252,23 +252,30 @@ public class Monom implements function{
  * to string method returns the String of the given monom.
  */
 	public String toString() {
+		
 		String ans = "";
-
-		if(this._coefficient != 0 ) {
-			if(this._coefficient != 1)
-				ans += _coefficient;
-		}
-		else
+		
+		if(this._coefficient == 0) {
 			return "0";
-
-		if(this._power == 1) {
-			ans+="x";
+		}else if(this._coefficient == 1 && this._power ==1) {
+			return "x";
+		}else if(this._coefficient == 1 && this._power ==0 ) {
+			return "1";
+		}else if(this._power ==0 ) {
+			return ""+_coefficient;
+		}else {
+			if(_coefficient == 1) {
+				ans += "x"; 
+			} else {
+				ans += _coefficient+"x";
+			}
+			if(_power == 1) {
+				return ans;
+			}else {
+				return ans+"^"+_power;
+			}
 		}
-		else if(this._power > 1) {
-			ans+="x^"+_power;
-		}
 
-		return ans;
 	}
 /**
  * recive a monom and check wither they are logically equals in deviation of epsilon.
