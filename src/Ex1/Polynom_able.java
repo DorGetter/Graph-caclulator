@@ -34,6 +34,7 @@ import java.util.Iterator;
  *
  */
 public interface Polynom_able extends cont_function{
+	Polynom_able copy = null;
 	/**
 	 * Add p1 to this Polynom
 	 * @param p1

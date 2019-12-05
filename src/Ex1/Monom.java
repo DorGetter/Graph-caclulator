@@ -282,7 +282,18 @@ public class Monom implements function{
  * @param m monom to be compare with.
  * @return
  */
-	public boolean equals(Monom m) {
+	public boolean equals(Object m1) {
+		
+		if(!(m1 instanceof function)) {
+			throw new RuntimeException("Not the valid OBJ"); 
+		}else if(m1 instanceof Polynom_able) {
+			return m1.equals(this);
+		}else if(m1 instanceof ComplexFunction) {
+			m1.equals(this);
+		}
+		
+		Monom m = new Monom((Monom)m1);
+		
 		if(this == m) {
 			return true;
 		}
@@ -325,14 +336,14 @@ public class Monom implements function{
 	//////////////////////////////////////////////////////Need to implement//////////////////////////////
 	@Override
 	public function initFromString(String s) {
-		// TODO Auto-generated method stub
-		return null;
+		function m1 = new Monom(s);
+		return m1;
 	}
 
 	@Override
 	public function copy() {
-		// TODO Auto-generated method stub
-		return null;
+		function m1 = new Monom(this);
+		return m1;
 	}
 	
 	

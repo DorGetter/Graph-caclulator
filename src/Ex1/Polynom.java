@@ -147,8 +147,9 @@ public class Polynom implements Polynom_able{
 	 * @param p1 - Polynom to be added. 				
 	 */
 	@Override
-	public void add(Polynom_able p1) {
-
+	public void add(Polynom_able p) {
+		
+		Polynom_able p1 = (Polynom_able) p.copy();
 		Iterator<Monom> new_monom = p1.iteretor() ;										//Construct a Monom Iterator.
 		Monom monom1;																	//Contain the Monom in p1. 
 
@@ -179,8 +180,9 @@ public class Polynom implements Polynom_able{
 	* @param m1 - Monom to be added to the Polynom. 
 	*/
 	@Override
-	public void add(Monom m1) {
-
+	public void add(Monom m) {
+		
+		Monom m1 = new Monom(m);
 		if(m1.get_coefficient() == 0) {													//if the Monom is zero- no action needed.
 			return;
 		}
@@ -230,8 +232,9 @@ public class Polynom implements Polynom_able{
 	* @param p1- Polynom for subtraction. 
 	*/
 	@Override
-	public void substract(Polynom_able p1) {
-
+	public void substract(Polynom_able p) {
+		
+		Polynom_able p1 = (Polynom_able) p.copy();
 		Iterator<Monom> new_monom = p1.iteretor() ;										//creating iterator to travel on p1 Monom's.
 
 		if(this==p1) {																	//same Pointers (same Objects).
@@ -256,7 +259,9 @@ public class Polynom implements Polynom_able{
 	* @param p1- Polynom for multiply. 
 	*/
 	@Override
-	public void multiply(Polynom_able p1) {
+	public void multiply(Polynom_able p) {
+		
+		Polynom_able p1 = (Polynom_able) p.copy();
 		Polynom temp_poly = new Polynom();												//Creating a temp Polynom.
 
 		for (int i = 0; i < polylist.size(); i++) {										//Go over Polynom list.
@@ -283,11 +288,26 @@ public class Polynom implements Polynom_able{
 	*/
 	@Override
 	public boolean equals(Object p1) {
-		
-		if(!(p1 instanceof Polynom_able)) {
-			throw new RuntimeException("Not the same OBJ");
+
+		if(!(p1 instanceof function)) {
+			throw new RuntimeException("Not the valid OBJ");
+		}else if(p1 instanceof Monom) {
+
+			if(polylist.size() > 1) {
+				return false;
+			}else {
+				if(polylist.get(0).toString()== p1.toString()) {
+					return true;
+				}
+				else
+					return false;
+			}
+		}else if(p1 instanceof ComplexFunction) {
+			return p1.equals(this);
+		}else if(p1 == this) {
+			return true;
 		}
-		
+			
 		boolean flag = false;												// flag to know if a Monom from p1 is in this polynom
 		Iterator<Monom> m1 = ((Polynom_able) p1).iteretor();
 		Iterator<Monom> m2 = this.iteretor();
@@ -394,22 +414,22 @@ public class Polynom implements Polynom_able{
 	* @return a Deep copy of Polynom.
 	*/
 	
-	public Polynom_able copy_func() {
-		Polynom_able new_poly = new Polynom();											//Constract a new polynom obj.
-		Iterator<Monom> m1 = this.iteretor();											//Call's the class Iterator.
-
-		while(m1.hasNext()) {															//Go throw the Monoms- add to Polylist.
-			Monom temp = new Monom(m1.next());
-			new_poly.add(temp);
-		}
-
-		return new_poly;
-	}
+//	public Polynom_able copy_func() {
+//		Polynom_able new_poly = new Polynom();											//Constract a new polynom obj.
+//		Iterator<Monom> m1 = this.iteretor();											//Call's the class Iterator.
+//
+//		while(m1.hasNext()) {															//Go throw the Monoms- add to Polylist.
+//			Monom temp = new Monom(m1.next());
+//			new_poly.add(temp);
+//		}
+//
+//		return new_poly;
+//	}
 	
 	public function copy() {
 		
 		function p1 = new Polynom();
-		p1.initFromString(this.toString());
+		p1 = p1.initFromString(this.toString());
 
 		return p1;
 	}
