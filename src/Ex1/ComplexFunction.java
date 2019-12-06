@@ -1,6 +1,6 @@
 package Ex1;
 
-import javax.security.auth.x500.X500Principal;
+
 
 /**
  **Class Explanation**
@@ -52,9 +52,6 @@ public class ComplexFunction implements complex_function {
 	 * Not available to User.  
 	 */
 	private ComplexFunction() {}
-
-
-
 
 	/**
 	 * 			ComplexFunction Constructor Num 0: 
