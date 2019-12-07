@@ -18,26 +18,27 @@ import com.google.gson.annotations.SerializedName;
  * ---------------------------------------------------------------------------------------------------------------------
  * 1) 	ComplexFunction(function p1)			-Constructor Num 1.														|
  * 2)	ComplexFunction(op,left,right)			-Constructor Num 2.														|
- * 3)	add(Polynom_able)					 	-Adding two Polynom_able objects into one.								|
- * 4)	add(Monom)								-Adding Monom into the Polynom.											|
- * 5)	substruct(Polnom_able) 					-Substruction of two Polnoms.											|
- * 6)	multiply								-Multiplying two Polynoms.												|
- * 7)	equals									-Check if two Polynoms are equal- by deviation of Epsilon.				|
- * 8)	isZero									-Check if Polynom is equal to zero.										|
- * 9)	root									-Calculate the point which the Polynom==zero between x0,x1 with deviation of Epsilon.	|
- * 10)	Copy					-Crates deep copy of Polynom.															|
- * 11)	Derivative				-Derivative the Polynom.																|
- * 12)	area					-Calculates the area size between the function to positive x axis.						|
- * 13)	multiply				-Multiply Polynom by Monom. 															|
- * 14) 	Iterator				-Returns Iterator from Class Iterator.													|
- * 15) 	toString				-Returns a String of the Polynom.														|
+ * 3)	ComplexFunction(String func)		 	-Constructor Num 3.														|
+ * 4)	f(double x)								-Calculating implement x on function.									|
+ * 5)	initFromString(String s)				-Initialized C.F using string. 											|
+ * 6)	copy()									-Deep copy.																|
+ * 7)	plus(function f1)						-implement plus op between two function type objects in C.F.			|
+ * 8)	mult(function f1)						-implement mult op between two function type objects in C.F.			|
+ * 9)	div(function f1)						-implement div  op between two function type objects in C.F				|
+ * 10)	max(function f1)						-implement max  op between two function type objects in C.F.			|
+ * 11)	min(function f1)						-implement min  op between two function type objects in C.F.			|
+ * 12)	comp(function f1)						-implement comp op between two function type objects in C.F.			|
+ * 13)	left(function f1)						-returns the L.H.S of given C.F											|
+ * 14)	right(function f1)						-returns the R.H.S of given C.F											|
+ * 15)	getop(function f1)						-returns the operation of given C.F.									|
+ * 16)	toString(function f1)					-implement plus op between two function type objects in C.F.			|
+ * 17)	equals(function f1)						-if the two mathematical object are logicly equal			 			|
  * ---------------------------------------------------------------------------------------------------------------------
  * 										**Legit ComplexFunction**
  * ----------------------------------------------------------------------------------------------------------------------
- * Polynom will be only in the form of String containing valid Monoms: ax^b +/- ax^b +/- .... +/- ax^b.					|
- * the following cases are not valid: 																					|
- * 1) arithmetical operation within the equation that are not +\-.														|
- * 2) String containing letters or different characters other then 'x' (small x), '^' if there is a power.				|
+ * Legit C.F will Contain only operations from the list below, and will be construct from objects which implements 		|
+ * 'Function'.																											|
+ * Valid operations: Plus, Times, Divid, Max, Min, Comp , None, Error													|
  * ----------------------------------------------------------------------------------------------------------------------
  * 									
  * @author DorGetter && OmerRugi
@@ -245,7 +246,9 @@ public class ComplexFunction implements complex_function {
 
 
 	}
-
+/**
+ * 				ComlexFunction Constructor  Num 3: 
+ */
 	public ComplexFunction(String func) {
 		
 		ComplexFunction temp = new ComplexFunction();
@@ -393,7 +396,6 @@ public class ComplexFunction implements complex_function {
 		function copy_obj = new ComplexFunction(this.op,this.left,this.right);
 		return copy_obj;
 	}
-
 	/**
 
 		Plus function: 
@@ -421,7 +423,6 @@ public class ComplexFunction implements complex_function {
 		this.op = Operation.Plus;
 
 	}
-
 	/**
 		mult function: 
 	 *	Given a C.F and a function object sets a new C.F which will hold the old C.F on the
@@ -490,7 +491,7 @@ public class ComplexFunction implements complex_function {
 	 *  *** 	Sets the right to the f1 (input function object)
 	 *  **** Sets the operation between left and right to be max.  	
 	 *  
-	 *  @param f: function object to divide by.
+	 *  @param f: function object to max between.
 	 */
 	@Override
 	public void max(function f) {
@@ -503,7 +504,7 @@ public class ComplexFunction implements complex_function {
 
 	}
 	/**
-		max function: 
+		min function: 
 	 *	Given a C.F and a function object sets a new C.F which will hold the old C.F on the
 	    new function object as left and the new function object to the right.  
 	 * 	
@@ -517,7 +518,7 @@ public class ComplexFunction implements complex_function {
 	 *  *** 	Sets the right to the f1 (input function object)
 	 *  **** Sets the operation between left and right to be min.  	
 	 *  
-	 *  @param f: function object to divide by.
+	 *  @param f: function object to min with.
 	 */
 	@Override
 	public void min(function f) {
@@ -598,7 +599,6 @@ public class ComplexFunction implements complex_function {
 		}
 		return op+"("+left.toString()+","+right.toString()+")";
 	}
-
 	/**
 
 		equals function: 
