@@ -1,6 +1,8 @@
 package Ex1;
 
+import javax.management.InstanceAlreadyExistsException;
 
+import com.google.gson.annotations.SerializedName;
 
 /**
  **Class Explanation**
@@ -41,8 +43,12 @@ package Ex1;
  */
 
 public class ComplexFunction implements complex_function {
-
-	private function left, right;															//left,right are F(x),G(x).															
+	
+	@SerializedName("CF_LeftFunction")
+	private function left;														//left,right are F(x),G(x).															
+	@SerializedName("CF_RightFunction")
+	private function right;
+	@SerializedName("CF_Operation")
 	private Operation op=Operation.None;													//Operation.
 
 
@@ -238,13 +244,7 @@ public class ComplexFunction implements complex_function {
 
 	}
 
-	//	@Override
-	//	public double f(double x) {
-	//		
-	//		double ans =0;
-	//		ans=op_func(x);
-	//		return ans;
-	//	}
+
 	/**
 			f(x) calculating: 
 
@@ -365,7 +365,7 @@ public class ComplexFunction implements complex_function {
 
 
 	/**
-				Deep Copy: 
+		Deep Copy: 
 
 	 * Initializing new Function OBJ. copy of the C.F that function copy apply on;   
 	 * 
@@ -387,7 +387,7 @@ public class ComplexFunction implements complex_function {
 
 	/**
 
-			Plus function: 
+		Plus function: 
 	 *	Given a C.F and a function object sets a new C.F which will hold the old C.F on the
     	new function object as left and the new function object to the right.  
 	 * 	
@@ -414,7 +414,7 @@ public class ComplexFunction implements complex_function {
 	}
 
 	/**
-			mult function: 
+		mult function: 
 	 *	Given a C.F and a function object sets a new C.F which will hold the old C.F on the
 		new function object as left and the new function object to the right.  
 	 * 	
@@ -440,7 +440,7 @@ public class ComplexFunction implements complex_function {
 		this.op = Operation.Times;
 	}
 	/**
-			div function: 
+		div function: 
 	 *	Given a C.F and a function object sets a new C.F which will hold the old C.F on the
 	new function object as left and the new function object to the right.  
 	 * 	
@@ -593,18 +593,23 @@ public class ComplexFunction implements complex_function {
 	/**
 
 		equals function: 
-*	Given two Object (implementing to function) the function returns if the two mathematical object are logicly equal. 
-*	The function is not 100 present 
+*	 Given an object(implements of function) the function returns if the two mathematical object are logicly equal. 
+*	 The function is not 100 present right, it will check the implementation of x on a range between 
+*	-2000 to 2000 and if the number of mismatch results is not more than 10 the function will conceder
+*	 those objects to be logicly equals.  
+*
+*	
 * 	
 * 		* Valid inputs: function type obj. 
-*  
+*  		
 * 
 *					 Way of action:  
-*
-*  *	Creating a new function object which will contain a copy of the class C.F
-*  ** 	Sets the left to the "old" C.F
-*  *** 	Sets the right to the f1 (input function object)
-*  **** Sets the operation between left and right to be Plus.  	
+*  *		Validates the instance of the input object. 
+*  **		 
+*       	depends on the instance of it.
+*  *** 		Sets the left to the "old" C.F
+*  **** 	Sets the right to the f1 (input function object)
+*  ***** 	Sets the operation between left and right to be Plus.  	
 *  
 *  @param f1: function object to add to the C.F.
 */	

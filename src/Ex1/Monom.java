@@ -6,6 +6,8 @@ import java.util.StringTokenizer;
 import javax.management.RuntimeErrorException;
 import org.w3c.dom.ranges.RangeException;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
 											**Class Explanation**
 * ---------------------------------------------------------------------------------------------------------------------
@@ -41,8 +43,10 @@ public class Monom implements function{
 	public static final double EPSILON = 0.0000001;
 
 	public static final Comparator<Monom> _Comp = new Monom_Comperator();
-
+	
+	@SerializedName("Coefficient")
 	private double _coefficient; 
+	@SerializedName("Power")
 	private int _power;
 
 	public static Comparator<Monom> getComp() {return _Comp;}

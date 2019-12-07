@@ -149,16 +149,16 @@ class ComplexFunctionTest {
 //
 //	}
 
-	@Test
-	void testInitFromString() {
-		System.out.println("---------------------------");
-		Polynom a = new Polynom("0");
-		ComplexFunction cf = new ComplexFunction(a);
-		function cf1 = cf.initFromString("plus(-1.0x^4+2.4x^2+3.1,0.1x^5-1.298x+5.0)");
-		ComplexFunction cf2 = new ComplexFunction(cf1);
-		System.out.println(cf2);
-		System.out.println("---------------------------");
-	}
+//	@Test
+//	void testInitFromString() {
+//		System.out.println("---------------------------");
+//		Polynom a = new Polynom("0");
+//		ComplexFunction cf = new ComplexFunction(a);
+//		function cf1 = cf.initFromString("plus(-1.0x^4+2.4x^2+3.1,0.1x^5-1.298x+5.0)");
+//		ComplexFunction cf2 = new ComplexFunction(cf1);
+//		System.out.println(cf2);
+//		System.out.println("---------------------------");
+//	}
 
 //	@Test
 //	void testCopy() {
@@ -421,5 +421,16 @@ class ComplexFunctionTest {
 //		
 //
 //	}
+	
+	@Test
+	void testequals() {
+		
+		Monom m1 = new Monom("x");
+		Polynom p1 = new Polynom("x^2");
+		ComplexFunction cf = new ComplexFunction(Operation.Divid,p1,m1);
+		
+		System.out.println(cf.equals(m1));
+
+	}
 
 }

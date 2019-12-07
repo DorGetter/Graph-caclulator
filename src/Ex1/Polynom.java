@@ -4,6 +4,8 @@ import java.util.function.Predicate;
 
 import javax.management.RuntimeErrorException;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  											**Class Explanation**
 * ---------------------------------------------------------------------------------------------------------------------
@@ -52,8 +54,10 @@ import javax.management.RuntimeErrorException;
 */
 public class Polynom implements Polynom_able{
 	//			** class variabels **
-	double poly =0;
+	
 	private static final double EPSILON = 0.0000001;
+	
+	@SerializedName("PloynomList")
 	private ArrayList<Monom> polylist = new ArrayList<Monom>();
 	
 	public Polynom() {;}

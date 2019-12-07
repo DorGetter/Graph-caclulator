@@ -2,6 +2,7 @@ package Ex1;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.IOException;
 import java.util.Stack;
 
 public class MainTest {
@@ -89,7 +90,7 @@ public class MainTest {
 
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		System.out.println("---------------------------");
 		Polynom a = new Polynom("0");
@@ -173,8 +174,13 @@ public class MainTest {
 		fg.add(m4);
 		fg.add(m5);
 		
+		//fg.drawFunctions();
 		
-		fg.drawFunctions();
+		ComplexFunction cf13 = fg.get(1);
+		System.out.println(cf13.toString());
+		
+		fg.saveToFile("test2");
+		fg.initFromFile("test1.json");
 		
 	}
 }
