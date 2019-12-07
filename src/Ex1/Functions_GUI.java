@@ -26,9 +26,7 @@ public class Functions_GUI implements functions, Serializable {
 	@SerializedName("FunctionArry")
 	ArrayList<function> list = new ArrayList<function>();
 
-	
-	
-	
+
 	@Override
 	public boolean add(function arg0) {
 		try {
@@ -117,86 +115,143 @@ public class Functions_GUI implements functions, Serializable {
 	@Override
 	public void initFromFile(String file) throws IOException {
 
-
-		FileReader fr = new FileReader(file);
-		BufferedReader br = new BufferedReader(fr);
-		ArrayList <function> temp=new ArrayList<function>();
-		String lineReader;
-		lineReader=br.readLine();
-		while(lineReader!=null) 
+		try {
+		FileReader reader = new FileReader(file);
+		BufferedReader buffer = new BufferedReader(reader);
+		ArrayList <function> list_temp =new ArrayList<function>();
+		String readline;
+		readline=buffer.readLine();
+		while(readline!=null) 
 		{
-			temp.add(new ComplexFunction(lineReader));
-			lineReader=br.readLine();
+			list_temp.add(new ComplexFunction(readline));
+			readline=buffer.readLine();
 		}
-		this.list=temp;
-		br.close();
-		fr.close();
-
+		this.list=list_temp;
+		buffer.close();
+		reader.close();
+		}catch (Exception e) {
+			throw new IOException();
+		}
 	}
 
 	@Override
 	public void saveToFile(String file) throws IOException {
-
-		FileWriter fw = new FileWriter(file);
-		PrintWriter outs = new PrintWriter(fw);
+		try {
+		FileWriter f_writer = new FileWriter(file);
+		PrintWriter p_writer = new PrintWriter(f_writer);
 		for(int i=0;i<list.size();i++) 
-			outs.println(list.get(i).toString());
-		outs.close(); 
-		fw.close();
-		
-//		//Write JSON to file
-//		try 
-//		{
-//			Gson gson = new Gson();
-//			String json = gson.toJson(this);
-//			System.out.println(json);
-//			String file_name = file+".json";
-//			PrintWriter pw = new PrintWriter(new File(file_name));
-//			pw.write(json);
-//			pw.close();
-//		} 
-//		catch (FileNotFoundException e) 
-//		{
-//			e.printStackTrace();
-//
-//		}
-
+			p_writer.println(list.get(i).toString());
+		p_writer.close(); 
+		f_writer.close();
+		}catch (Exception e) {
+			throw new IOException();
+		}
 	}
 
 	@Override
 	public void drawFunctions(int width, int height, Range rx, Range ry, int resolution) {
 
+		
 		StdDraw.setCanvasSize(width,height);
-		StdDraw.setPenRadius(0.009);
-		StdDraw.setPenColor(StdDraw.BLACK);
+
 
 		StdDraw.setXscale(rx.get_min(),rx.get_max());
 		StdDraw.setYscale(ry.get_min(),ry.get_max());
+
+		StdDraw.setPenRadius(0.001);
+		StdDraw.setPenColor(Color.LIGHT_GRAY);
+		for (int i = -99; i < 99; i++) {
+
+			StdDraw.line(i, 100, i, -100);
+			StdDraw.line(100, i, -100, i);
+
+		}
+
+		StdDraw.setPenRadius(0.00000001);
+		StdDraw.setPenColor(Color.BLACK);
+		for (int i = -99; i < 99; i++) {
+			StdDraw.text(i, -0.5, ""+i);
+			if (i==0) {}
+			else
+				StdDraw.text(0.5, i, ""+i);
+
+		}
+
+		StdDraw.setPenRadius(0.004);
+		StdDraw.setPenColor(StdDraw.BLACK);
+
 		StdDraw.line(rx.get_min(), 0, rx.get_max(), 0);
 		StdDraw.line(0, ry.get_min(), 0, ry.get_max());
 
 
 		function p1 = new Polynom("5");
-		StdDraw.setPenColor(StdDraw.RED);
-		StdDraw.setPenRadius(0.005);
-
-		//		for (double i = rx.get_min(); i < rx.get_max()+1; i+=rx.get_max()/resolution) {
-		//			StdDraw.point(i,p1.f(i));
-		//		}
+		StdDraw.setPenRadius(0.002);
 
 		for (int j = 0; j < list.size(); j++) {
+			int r= (int) (Math.random()*244);
+			int g= (int) (Math.random()*244);
+			int b= (int) (Math.random()*244);
+
+			System.out.println(r+" "+g+ " "+b);
+
 			for (double i = rx.get_min(); i < rx.get_max()+1; i+=rx.get_max()/resolution) {
-				if(ry.isIn(list.get(j).f(i))) {
-					StdDraw.line(i, list.get(j).f(i), i+1, list.get(j).f(i+1));
+				StdDraw.setPenColor(r, g, b);
+				try {
+				if(ry.isIn(list.get(j).f(i)) ||ry.isIn(list.get(j).f(i+0.5)) ) {
+					StdDraw.line(i, list.get(j).f(i), i+0.5, list.get(j).f(i+0.5));
+				}
+				}catch (Exception e) {
+					
 				}
 			}
 		}
+
+		
+		
+		
+		
+		
+		
+		
+		
+//		StdDraw.setCanvasSize(width,height);
+//		StdDraw.setPenRadius(0.009);
+//		StdDraw.setPenColor(StdDraw.BLACK);
+//
+//		StdDraw.setXscale(rx.get_min(),rx.get_max());
+//		StdDraw.setYscale(ry.get_min(),ry.get_max());
+//		StdDraw.line(rx.get_min(), 0, rx.get_max(), 0);
+//		StdDraw.line(0, ry.get_min(), 0, ry.get_max());
+//
+//
+//		function p1 = new Polynom("5");
+//		StdDraw.setPenColor(StdDraw.RED);
+//		StdDraw.setPenRadius(0.005);
+//
+//		for (int j = 0; j < list.size(); j++) {
+//			for (double i = rx.get_min(); i < rx.get_max()+1; i+=rx.get_max()/resolution) {
+//				if(ry.isIn(list.get(j).f(i))) {
+//					StdDraw.line(i, list.get(j).f(i), i+1, list.get(j).f(i+1));
+//				}
+//			}
+//		}
 
 	}
 
 	@Override
 	public void drawFunctions(String json_file) {
-		// TODO Auto-generated method stub
+		Gson gson = new Gson();
+		try 
+		{
+			FileReader reader = new FileReader(json_file);
+			GUI_Window window = gson.fromJson(reader,GUI_Window.class);
+			Range rx=new Range(window.rx[0],window.rx[1]);
+			Range ry=new Range(window.ry[0],window.ry[1]);
+			this.drawFunctions(window.w, window.h, rx, ry, window.Resolution);
+		} 
+		catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -272,6 +327,30 @@ public class Functions_GUI implements functions, Serializable {
 			throw new RuntimeException("Index out of bound!");
 		}
 		return null;
+	}
+
+	public class GUI_Window 
+	{
+
+		public int Resolution;
+		public double []rx;
+		public double []ry;
+		public int w;
+		public int h;
+
+		public GUI_Window(int w,int h,int resolution,double []rx,double []ry)
+		{
+			ry=new double[2];
+			rx=new double[2];
+			for(int i = 0; i<3;i++) {
+				this.rx[i]=rx[i];
+				this.ry[i]=ry[i];
+			}
+			this.h=h;
+			this.w=w;
+			this.Resolution=resolution;
+		}
+
 	}
 
 }

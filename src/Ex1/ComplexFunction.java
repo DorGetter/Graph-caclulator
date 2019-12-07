@@ -109,7 +109,12 @@ public class ComplexFunction implements complex_function {
 	public ComplexFunction(String op, function left_org, function right_org) {
 
 		function left  = left_org.copy();
-		function right = right_org.copy();
+		function right;
+		if(right_org == null) {
+			right = null;
+		}
+		else
+			right = right_org.copy();
 
 
 		switch (op) {
@@ -205,33 +210,39 @@ public class ComplexFunction implements complex_function {
 	 * @param right: implementor obj. of function.
 	 */
 	public ComplexFunction(Operation op, function left_org, function right_org) {
-
-		function left  = left_org.copy();
-		function right = right_org.copy();
+		
+		function right_side;
+		function left_side  = left_org.copy();
+		if(right_org == null) {
+			right_side = null;
+		}else {
+			right_side = right_org.copy();
+		}
+		
 
 		if(op == Operation.None) { 
 
-			if(right ==null && left==null) {
+			if(right_side ==null && left_side==null) {
 				throw new RuntimeException("No left function");
 			}
-			if(right == null && left != null) {
-				this.left = left;
+			if(right_side == null && left_side != null) {
+				this.left = left_side;
 				return;
 			}
-			if(left == null && right != null) {
+			if(left_side == null && right_side != null) {
 				throw new RuntimeException("No left function");
 			}
-			if(left != null && right != null) {
+			if(left_side != null && right_side != null) {
 				throw new RuntimeException("Non op");
 			}
 		}
 		else {
-			if(right == null || left == null) {
+			if(right_side == null || left_side == null) {
 				throw new RuntimeException("Null function");
 			}
 
 			if(op == Operation.Divid) {
-				if(right.toString() == "0") {
+				if(right_side.toString() == "0") {
 					throw new RuntimeException("Div by 0");
 				}
 			}
@@ -239,8 +250,8 @@ public class ComplexFunction implements complex_function {
 				throw new RuntimeException("Not a valid op");
 			}
 
-			this.left = left;
-			this.right = right;
+			this.left = left_side;
+			this.right = right_side;
 			this.op = op;
 		}
 
@@ -392,8 +403,13 @@ public class ComplexFunction implements complex_function {
 	 */	
 	@Override
 	public function copy() {
-
-		function copy_obj = new ComplexFunction(this.op,this.left,this.right);
+		
+		function copy_obj;
+		if(this.right == null) {
+			copy_obj = new ComplexFunction(this.left);
+		}
+		else
+			copy_obj = new ComplexFunction(this.op,this.left,this.right);
 		return copy_obj;
 	}
 	/**
@@ -550,7 +566,6 @@ public class ComplexFunction implements complex_function {
 	@Override
 	public void comp(function f) {
 		function f1 = f.copy();
-
 		function new_left = this.copy();
 		this.left = new_left;
 		this.right = f1;
@@ -639,15 +654,17 @@ public class ComplexFunction implements complex_function {
 
 		int Range = 2000; 
 		int counter_Of_Match=0;
+		double eps = 0.000001;
 
-		for (double i = -2000; i < Range; i=i+0.1) {
+		for (double i = -2000; i < Range; i=i+0.001) {
 			try {
-				if(this.f(i) == x.f(i)) {
+				if((this.f(i) == x.f(i)) || (this.f(i)+eps == x.f(i)) || (this.f(i) == x.f(i)+eps) ) {
 					counter_Of_Match ++;
 				}		
 			} 
 			catch (Exception e) {}
 		}
+		System.out.println(counter_Of_Match);
 		if ((Range*2)-counter_Of_Match>10)
 			return false;
 

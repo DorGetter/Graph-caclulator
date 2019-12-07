@@ -96,8 +96,7 @@ public class Polynom implements Polynom_able{
 				}
 				catch (Exception e) {
 					System.out.println(s);
-					throw new RuntimeException("Not Valid Poly");}			//Isnt a Monom or Polynom Valid input.
-			}			
+					throw new RuntimeException("Not Valid Poly");}}				//Isnt a Monom or Polynom Valid input.
 			else if(s.charAt(i) == '-' && temp!="") 										//same as above but "-" arithmetic opperation 
 																							//between the Monoms.
 			{
@@ -418,23 +417,11 @@ public class Polynom implements Polynom_able{
 	* @return a Deep copy of Polynom.
 	*/
 	
-//	public Polynom_able copy_func() {
-//		Polynom_able new_poly = new Polynom();											//Constract a new polynom obj.
-//		Iterator<Monom> m1 = this.iteretor();											//Call's the class Iterator.
-//
-//		while(m1.hasNext()) {															//Go throw the Monoms- add to Polylist.
-//			Monom temp = new Monom(m1.next());
-//			new_poly.add(temp);
-//		}
-//
-//		return new_poly;
-//	}
 	
 	public function copy() {
 		
 		function p1 = new Polynom();
 		p1 = p1.initFromString(this.toString());
-
 		return p1;
 	}
 	
