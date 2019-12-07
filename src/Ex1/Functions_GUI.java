@@ -1,9 +1,11 @@
 package Ex1;
 
 import java.awt.Color;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -116,36 +118,48 @@ public class Functions_GUI implements functions, Serializable {
 	public void initFromFile(String file) throws IOException {
 
 
-		try {
-			Gson gson = new Gson();
-			JsonReader reader =  new JsonReader (new FileReader(file));
-			Functions_GUI tg1 = gson.fromJson(reader, Functions_GUI.class);
-			this.list=tg1.list;
-		}catch (Exception e) {
-			throw new RuntimeException(e);
+		FileReader fr = new FileReader(file);
+		BufferedReader br = new BufferedReader(fr);
+		ArrayList <function> temp=new ArrayList<function>();
+		String lineReader;
+		lineReader=br.readLine();
+		while(lineReader!=null) 
+		{
+			temp.add(new ComplexFunction(lineReader));
+			lineReader=br.readLine();
 		}
+		this.list=temp;
+		br.close();
+		fr.close();
 
 	}
 
 	@Override
 	public void saveToFile(String file) throws IOException {
 
-		//Write JSON to file
-		try 
-		{
-			Gson gson = new Gson();
-			String json = gson.toJson(this);
-			System.out.println(json);
-			String file_name = file+".json";
-			PrintWriter pw = new PrintWriter(new File(file_name));
-			pw.write(json);
-			pw.close();
-		} 
-		catch (FileNotFoundException e) 
-		{
-			e.printStackTrace();
-
-		}
+		FileWriter fw = new FileWriter(file);
+		PrintWriter outs = new PrintWriter(fw);
+		for(int i=0;i<list.size();i++) 
+			outs.println(list.get(i).toString());
+		outs.close(); 
+		fw.close();
+		
+//		//Write JSON to file
+//		try 
+//		{
+//			Gson gson = new Gson();
+//			String json = gson.toJson(this);
+//			System.out.println(json);
+//			String file_name = file+".json";
+//			PrintWriter pw = new PrintWriter(new File(file_name));
+//			pw.write(json);
+//			pw.close();
+//		} 
+//		catch (FileNotFoundException e) 
+//		{
+//			e.printStackTrace();
+//
+//		}
 
 	}
 

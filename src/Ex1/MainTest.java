@@ -166,6 +166,7 @@ public class MainTest {
 		System.out.println(cf12.toString());
 		
 		Functions_GUI fg = new Functions_GUI();
+		Functions_GUI fg1 = new Functions_GUI();
 		fg.add(m0);
 		fg.add(cf12);
 		fg.add(m1);
@@ -179,8 +180,12 @@ public class MainTest {
 		ComplexFunction cf13 = fg.get(1);
 		System.out.println(cf13.toString());
 		
-		fg.saveToFile("test2");
-		fg.initFromFile("test1.json");
+		ComplexFunction cf14 = new ComplexFunction("mul(x,x^2)");
+		System.out.println(cf14);
+		
+		fg.saveToFile("test3.json");
+		fg1.initFromFile("test3.json");
+		fg1.drawFunctions();
 		
 	}
 }

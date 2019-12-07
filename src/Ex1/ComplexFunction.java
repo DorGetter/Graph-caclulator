@@ -1,5 +1,7 @@
 package Ex1;
 
+import java.util.function.Function;
+
 import javax.management.InstanceAlreadyExistsException;
 
 import com.google.gson.annotations.SerializedName;
@@ -21,8 +23,8 @@ import com.google.gson.annotations.SerializedName;
  * 5)	substruct(Polnom_able) 					-Substruction of two Polnoms.											|
  * 6)	multiply								-Multiplying two Polynoms.												|
  * 7)	equals									-Check if two Polynoms are equal- by deviation of Epsilon.				|
- * 8)	isZero					-Check if Polynom is equal to zero.														|
- * 9)	root					-Calculate the point which the Polynom==zero between x0,x1 with deviation of Epsilon.	|
+ * 8)	isZero									-Check if Polynom is equal to zero.										|
+ * 9)	root									-Calculate the point which the Polynom==zero between x0,x1 with deviation of Epsilon.	|
  * 10)	Copy					-Crates deep copy of Polynom.															|
  * 11)	Derivative				-Derivative the Polynom.																|
  * 12)	area					-Calculates the area size between the function to positive x axis.						|
@@ -244,6 +246,13 @@ public class ComplexFunction implements complex_function {
 
 	}
 
+	public ComplexFunction(String func) {
+		
+		ComplexFunction temp = new ComplexFunction();
+		function a = temp.initFromString(func);
+		this.left = a;
+		
+	}
 
 	/**
 			f(x) calculating: 
@@ -260,7 +269,7 @@ public class ComplexFunction implements complex_function {
 	 *  ***     Returning ans. 
 	 * 
 	 * 
-	 *@param x :	double input for implementing on the C.F 
+	 *@param x:	double input for implementing on the C.F 
 	 */
 	@Override
 	public double f(double x) {
@@ -327,7 +336,7 @@ public class ComplexFunction implements complex_function {
 	 *  		by calling the InitFromString function on left (Using substring j+1 until i) and on right (Using substring right_side);   
 	 * 
 	 * 
-	 *@param s :	String contain C.F as a string. 
+	 *@param s:	String contain C.F as a string. 
 	 */
 	@Override
 	public function initFromString(String s) {
@@ -401,7 +410,7 @@ public class ComplexFunction implements complex_function {
 	 *  *** 	Sets the right to the f1 (input function object)
 	 *  **** Sets the operation between left and right to be Plus.  	
 	 *  
-	 *  @param f1: function object to add to the C.F.
+	 *  @param f: function object to add to the C.F.
 	 */	
 	@Override
 	public void plus(function f1) {
@@ -428,7 +437,7 @@ public class ComplexFunction implements complex_function {
 	 *  *** 	Sets the right to the f1 (input function object)
 	 *  **** Sets the operation between left and right to be mult/Times.  	
 	 *  
-	 *  @param f1: function object to multiply by.
+	 *  @param f: function object to multiply by.
 	 */	
 	@Override
 	public void mul(function f) {
@@ -454,7 +463,7 @@ public class ComplexFunction implements complex_function {
 	 *  *** 	Sets the right to the f1 (input function object)
 	 *  **** Sets the operation between left and right to be div.  	
 	 *  
-	 *  @param f1: function object to divide by.
+	 *  @param f: function object to divide by.
 	 */	
 	@Override
 	public void div(function f) {
@@ -481,7 +490,7 @@ public class ComplexFunction implements complex_function {
 	 *  *** 	Sets the right to the f1 (input function object)
 	 *  **** Sets the operation between left and right to be max.  	
 	 *  
-	 *  @param f1: function object to divide by.
+	 *  @param f: function object to divide by.
 	 */
 	@Override
 	public void max(function f) {
@@ -508,7 +517,7 @@ public class ComplexFunction implements complex_function {
 	 *  *** 	Sets the right to the f1 (input function object)
 	 *  **** Sets the operation between left and right to be min.  	
 	 *  
-	 *  @param f1: function object to divide by.
+	 *  @param f: function object to divide by.
 	 */
 	@Override
 	public void min(function f) {
@@ -535,7 +544,7 @@ public class ComplexFunction implements complex_function {
 	 *  *** 	Sets the right to the f1 (input function object)
 	 *  **** Sets the operation between left and right to be comp.  	
 	 *  
-	 *  @param f1: function object to compute with.
+	 *  @param f: function object to compute with.
 	 */
 	@Override
 	public void comp(function f) {
@@ -596,22 +605,21 @@ public class ComplexFunction implements complex_function {
 *	 Given an object(implements of function) the function returns if the two mathematical object are logicly equal. 
 *	 The function is not 100 present right, it will check the implementation of x on a range between 
 *	-2000 to 2000 and if the number of mismatch results is not more than 10 the function will conceder
-*	 those objects to be logicly equals.  
-*
-*	
+*	 those objects to be logically equals.  
 * 	
 * 		* Valid inputs: function type obj. 
 *  		
 * 
 *					 Way of action:  
 *  *		Validates the instance of the input object. 
-*  **		 
-*       	depends on the instance of it.
-*  *** 		Sets the left to the "old" C.F
-*  **** 	Sets the right to the f1 (input function object)
-*  ***** 	Sets the operation between left and right to be Plus.  	
+*  **		Implementing the x values between [-2000,2000] in both objects 
+*  			and count the number of same results in Counter.  
+*       	
+*  *** 		Checking if the the Range (4000 values) - Counter of match is 
+*  			less More then 10 ==> return false; 
 *  
-*  @param f1: function object to add to the C.F.
+*  **** 	Return true if the two object are past the test. 
+*  @param obj: object(implements function) to be compare with. 
 */	
 	@Override
 	public boolean equals(Object obj) {
@@ -640,7 +648,7 @@ public class ComplexFunction implements complex_function {
 			} 
 			catch (Exception e) {}
 		}
-		if (Range-counter_Of_Match>10)
+		if ((Range*2)-counter_Of_Match>10)
 			return false;
 
 		return true;
