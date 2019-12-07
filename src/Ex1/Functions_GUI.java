@@ -1,5 +1,6 @@
 package Ex1;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -118,6 +119,7 @@ public class Functions_GUI implements functions {
 		StdDraw.setYscale(ry.get_min(),ry.get_max());
 		StdDraw.line(rx.get_min(), 0, rx.get_max(), 0);
 		StdDraw.line(0, ry.get_min(), 0, ry.get_max());
+		
 
 		function p1 = new Polynom("5");
 		StdDraw.setPenColor(StdDraw.RED);
@@ -147,32 +149,55 @@ public class Functions_GUI implements functions {
 		
 		int width = 1024;
 		int height = 1024;
-		Range rx = new Range(-100, 100);
-		Range ry = new Range(-100,100);
+		Range rx = new Range(-25,25);
+		Range ry = new Range(-25,25);
 		int resolution = 2000;
 		StdDraw.setCanvasSize(width,height);
-		StdDraw.setPenRadius(0.009);
-		StdDraw.setPenColor(StdDraw.BLACK);
+
 
 		StdDraw.setXscale(rx.get_min(),rx.get_max());
 		StdDraw.setYscale(ry.get_min(),ry.get_max());
+		
+		StdDraw.setPenRadius(0.001);
+		StdDraw.setPenColor(Color.LIGHT_GRAY);
+		for (int i = -99; i < 99; i++) {
+			
+			StdDraw.line(i, 100, i, -100);
+			StdDraw.line(100, i, -100, i);
+				
+		}
+		
+		StdDraw.setPenRadius(0.00000001);
+		StdDraw.setPenColor(Color.BLACK);
+		for (int i = -99; i < 99; i++) {
+		StdDraw.text(i, -1, ""+i);
+		if (i==0) {}
+		else
+		 StdDraw.text(1, i, ""+i);
+		
+		}
+		
+		StdDraw.setPenRadius(0.004);
+		StdDraw.setPenColor(StdDraw.BLACK);
+		
 		StdDraw.line(rx.get_min(), 0, rx.get_max(), 0);
 		StdDraw.line(0, ry.get_min(), 0, ry.get_max());
-
+		
+		
 		function p1 = new Polynom("5");
-		StdDraw.setPenRadius(0.005);
+		StdDraw.setPenRadius(0.002);
 		
 		for (int j = 0; j < list.size(); j++) {
-			int r= (int) (Math.random()*255);
-			int g= (int) (Math.random()*255);
-			int b= (int) (Math.random()*255);
+			int r= (int) (Math.random()*244);
+			int g= (int) (Math.random()*244);
+			int b= (int) (Math.random()*244);
 			
 			System.out.println(r+" "+g+ " "+b);
 			
 			for (double i = rx.get_min(); i < rx.get_max()+1; i+=rx.get_max()/resolution) {
 				StdDraw.setPenColor(r, g, b);
-				if(ry.isIn(list.get(j).f(i)) ||ry.isIn(list.get(j).f(i+1)) ) {
-					StdDraw.line(i, list.get(j).f(i), i+1, list.get(j).f(i+1));
+				if(ry.isIn(list.get(j).f(i)) ||ry.isIn(list.get(j).f(i+0.5)) ) {
+					StdDraw.line(i, list.get(j).f(i), i+0.5, list.get(j).f(i+0.5));
 				}
 			}
 		}

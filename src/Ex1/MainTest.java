@@ -153,17 +153,19 @@ public class MainTest {
 //		for (double i = rx.get_min(); i < rx.get_max(); i+=rx.get_max()/resolution) {
 //			StdDraw.point(i,p1.f(i));
 //		}
-		
+		function m0 = new Polynom("0");
 		function m1 = new Polynom("x^3-13x^2-2");
 		function m2 = new Polynom("x^4-2");
 		function m3 = new Polynom("x-2");
 		function m4 = new Polynom("12x-2");
 		function m5 = new Polynom("x-2x^7");
 		
+		
 		function cf12 = new ComplexFunction("div" ,m1,m3);
 		System.out.println(cf12.toString());
 		
 		Functions_GUI fg = new Functions_GUI();
+		fg.add(m0);
 		fg.add(cf12);
 		fg.add(m1);
 		fg.add(m2);

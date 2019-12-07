@@ -367,7 +367,7 @@ public class ComplexFunction implements complex_function {
 	/**
 				Deep Copy: 
 
-	 * 	Initializing new Function OBJ. copy of the C.F that function copy apply on;   
+	 * Initializing new Function OBJ. copy of the C.F that function copy apply on;   
 	 * 
 	 * 		* Valid inputs:-
 	 *  
@@ -385,12 +385,11 @@ public class ComplexFunction implements complex_function {
 		return copy_obj;
 	}
 
-
-
 	/**
+
 			Plus function: 
 	 *	Given a C.F and a function object sets a new C.F which will hold the old C.F on the
-    new function object as left and the new function object to the right.  
+    	new function object as left and the new function object to the right.  
 	 * 	
 	 * 		* Valid inputs: function type obj. 
 	 *  
@@ -415,7 +414,33 @@ public class ComplexFunction implements complex_function {
 	}
 
 	/**
-			Plus function: 
+			mult function: 
+	 *	Given a C.F and a function object sets a new C.F which will hold the old C.F on the
+		new function object as left and the new function object to the right.  
+	 * 	
+	 * 		* Valid inputs: function type obj. 
+	 *  
+	 * 
+	 *					 Way of action:  
+	 *
+	 *  *	Creating a new function object which will contain a copy of the class C.F
+	 *  ** 	Sets the left to the "old" C.F
+	 *  *** 	Sets the right to the f1 (input function object)
+	 *  **** Sets the operation between left and right to be mult/Times.  	
+	 *  
+	 *  @param f1: function object to multiply by.
+	 */	
+	@Override
+	public void mul(function f) {
+		function f1 = f.copy();
+
+		function new_left = this.copy();
+		this.left = new_left;
+		this.right = f1;
+		this.op = Operation.Times;
+	}
+	/**
+			div function: 
 	 *	Given a C.F and a function object sets a new C.F which will hold the old C.F on the
 	new function object as left and the new function object to the right.  
 	 * 	
@@ -427,20 +452,10 @@ public class ComplexFunction implements complex_function {
 	 *  *	Creating a new function object which will contain a copy of the class C.F
 	 *  ** 	Sets the left to the "old" C.F
 	 *  *** 	Sets the right to the f1 (input function object)
-	 *  **** Sets the operation between left and right to be Plus.  	
+	 *  **** Sets the operation between left and right to be div.  	
 	 *  
-	 *  @param f1: function object to add to the C.F.
+	 *  @param f1: function object to divide by.
 	 */	
-	@Override
-	public void mul(function f) {
-		function f1 = f.copy();
-
-		function new_left = this.copy();
-		this.left = new_left;
-		this.right = f1;
-		this.op = Operation.Times;
-	}
-
 	@Override
 	public void div(function f) {
 		function f1 = f.copy();
@@ -451,7 +466,23 @@ public class ComplexFunction implements complex_function {
 		this.op = Operation.Divid;
 
 	}
-
+	/**
+		max function: 
+	 *	Given a C.F and a function object sets a new C.F which will hold the old C.F on the
+	new function object as left and the new function object to the right.  
+	 * 	
+	 * 		* Valid inputs: function type obj. 
+	 *  
+	 * 
+	 *					 Way of action:  
+	 *
+	 *  *	Creating a new function object which will contain a copy of 'this' C.F
+	 *  ** 	Sets the left to the "old" C.F
+	 *  *** 	Sets the right to the f1 (input function object)
+	 *  **** Sets the operation between left and right to be max.  	
+	 *  
+	 *  @param f1: function object to divide by.
+	 */
 	@Override
 	public void max(function f) {
 		function f1 = f.copy();
@@ -462,7 +493,23 @@ public class ComplexFunction implements complex_function {
 		this.op = Operation.Max;
 
 	}
-
+	/**
+		max function: 
+	 *	Given a C.F and a function object sets a new C.F which will hold the old C.F on the
+	    new function object as left and the new function object to the right.  
+	 * 	
+	 * 		* Valid inputs: function type obj. 
+	 *  
+	 * 
+	 *					 Way of action:  
+	 *
+	 *  *	Creating a new function object which will contain a copy of 'this' C.F
+	 *  ** 	Sets the left to the "old" C.F
+	 *  *** 	Sets the right to the f1 (input function object)
+	 *  **** Sets the operation between left and right to be min.  	
+	 *  
+	 *  @param f1: function object to divide by.
+	 */
 	@Override
 	public void min(function f) {
 		function f1 = f.copy();
@@ -473,7 +520,23 @@ public class ComplexFunction implements complex_function {
 		this.op = Operation.Min;
 
 	}
-
+	/**
+		comp function: 
+	 *	Given a C.F and a function object sets a new C.F which will hold the old C.F on the
+	    new function object as left and the new function object to the right.  
+	 * 	
+	 * 		* Valid inputs: function type obj. 
+	 *  
+	 * 
+	 *					 Way of action:  
+	 *
+	 *  *	Creating a new function object which will contain a copy of 'this' C.F
+	 *  ** 	Sets the left to the "old" C.F
+	 *  *** 	Sets the right to the f1 (input function object)
+	 *  **** Sets the operation between left and right to be comp.  	
+	 *  
+	 *  @param f1: function object to compute with.
+	 */
 	@Override
 	public void comp(function f) {
 		function f1 = f.copy();
@@ -484,22 +547,38 @@ public class ComplexFunction implements complex_function {
 		this.op = Operation.Comp;
 
 	}
-
+	/**
+		left function: 
+	 *
+	 *function return the left section of this Complex Function;
+	 */
 	@Override
 	public function left() {	
 		return this.left;
 	}
-
+	/**
+		right function: 
+	 *
+	 *function return the right section of this Complex Function;
+	 */
 	@Override
 	public function right() {
 		return this.right;
 	}
-
+	/**
+		get_op function: 
+	 *
+	 *function return the operation of this Complex Function left and right sections;
+	 */
 	@Override
 	public Operation getOp() {
 		return this.op;
 	}
-
+	/**
+	 	toString function: 
+	 *
+	 *function return String of the Complex Function. 
+	 */
 	public String toString() { 
 
 		if(op == Operation.None) {
@@ -511,6 +590,24 @@ public class ComplexFunction implements complex_function {
 		return op+"("+left.toString()+","+right.toString()+")";
 	}
 
+	/**
+
+		equals function: 
+*	Given two Object (implementing to function) the function returns if the two mathematical object are logicly equal. 
+*	The function is not 100 present 
+* 	
+* 		* Valid inputs: function type obj. 
+*  
+* 
+*					 Way of action:  
+*
+*  *	Creating a new function object which will contain a copy of the class C.F
+*  ** 	Sets the left to the "old" C.F
+*  *** 	Sets the right to the f1 (input function object)
+*  **** Sets the operation between left and right to be Plus.  	
+*  
+*  @param f1: function object to add to the C.F.
+*/	
 	@Override
 	public boolean equals(Object obj) {
 
@@ -540,7 +637,7 @@ public class ComplexFunction implements complex_function {
 		}
 		if (Range-counter_Of_Match>10)
 			return false;
-		
+
 		return true;
 	}
 
