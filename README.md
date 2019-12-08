@@ -11,13 +11,16 @@ Ariel university -Object-Oriented Programming course task 1.
 
 
 #  About the project:
-This project is built to create and use Polynoms and Monom's mathematical expressions using given interfaces.
+This project is built to create and use mathematical function expressions using given interfaces.
 
-The program allows building Monoms And Polynoms objects, either with a String or by creating a new object which stands the characteristics of a valid polynomial expression.
+The program allows build Complex functions, Polynoms and Monoms objects, either with a String or by creating a new object which stands the characteristics of a valid polynomial expression.
 
-The user of this project can add, subtract, multiply and derivate Monoms and Polynomials expressions. 
+The user of this project can add, subtract, multiply and derivate Monoms and Polynomials expressions.
+create a continues operations on functions and save them in a Complex function form.
+See the functions he created on graph using GUI window, which can also print to Json and read from Json files. 
 
 Also, the user can find the root of a Polynomial expression in a close interval and sum the blocked area between the polynomial function and the positive x-axis using Riemann's Integral.
+
 # Monom Class
 
 Class info:  This class represents a Monom mathematical expression. Valid Monom objects is in the form of ax^b.
