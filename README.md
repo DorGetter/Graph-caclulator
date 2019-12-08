@@ -103,8 +103,9 @@ Methods implemented:
 •	toString-Returns a String of the Polynom.
 
 
-________________________________________\
-#Complex function class
+________________________________________
+# Complex function class
+
 
 
  This class represents ComplexFunction OBJECT.
@@ -147,7 +148,7 @@ Methods:
  * 17)	equals(function f1)-if the two mathematical object are logicly equal.
 
 ---------------------
-#Function_GUI class:
+# Function_GUI class:
 
 This class uses an ArrayList database to store functions objects (Complex function, Polynom, Monom) from which generates a GUI image of functions on a screen. 
 Function GUI draw the class uses the StdDraw class, and uses Gson for read/write  Json files  create/write to text java Complex Function, Polynom, objects, Monom objects and presents them on screen.
