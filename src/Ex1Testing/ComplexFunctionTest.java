@@ -1,6 +1,8 @@
 package Ex1Testing;
 
 import Ex1.*;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.function.Function;
@@ -39,7 +41,21 @@ class ComplexFunctionTest {
 
 	@Test
 	void testComplexFunctionFunction() {
-
+		
+		Polynom expected0=new Polynom("3x^2-7x+9");
+		ComplexFunction actual0=new ComplexFunction(expected0);
+		assertEquals(expected0.f(5),actual0.f(5),0.00001);
+		Polynom expected1=new Polynom("6x^3-25x+70");
+		ComplexFunction actual1=new ComplexFunction(expected1);
+		assertEquals(expected1.f(5),actual1.f(5),0.00001);
+		Monom expected2=new Monom("15x^2");
+		ComplexFunction actual2=new ComplexFunction(expected2);
+		assertEquals(expected2.f(5),actual2.f(5),0.00001);
+		Monom expected3=new Monom("-8.5x");
+		ComplexFunction actual3=new ComplexFunction(expected3);
+		assertEquals(expected3.f(5),actual3.f(5),0.00001);
+		
+		
 		try {
 			String[] s3 = {"x+3","x-2", "x-4"};
 			Polynom p1 = new Polynom(s3[0]);
@@ -154,6 +170,15 @@ class ComplexFunctionTest {
 
 	@Test
 	void testF() {
+		double [] expectedArr={-905.0856,-0.696969,52,-3.3,-3.3};
+		double [] actualArr=new double[5];
+		for(int i=0;i<cf.length;i++) 
+		{
+			actualArr[i]=cf[i].f(2);	
+			assertEquals("testing f:",expectedArr[i],actualArr[i],0.00001);
+		}
+		
+		
 		System.out.println("fffffffffffff(x)");
 		Polynom p1 = new Polynom("5x");
 		Polynom p2 = new Polynom("3x");
@@ -225,17 +250,51 @@ class ComplexFunctionTest {
 
 	@Test
 	void testInitFromString() {
-		System.out.println("---------------------------");
+		System.out.println("--------------testInitFromString-------------");
 		Polynom a = new Polynom("0");
-		ComplexFunction cf = new ComplexFunction(a);
-		function cf1 = cf.initFromString("plus(-1.0x^4+2.4x^2+3.1,0.1x^5-1.298x+5.0)");
-		ComplexFunction cf2 = new ComplexFunction(cf1);
+		ComplexFunction cfx = new ComplexFunction(a);
+		function cf1x = cfx.initFromString("plus(-1.0x^4+2.4x^2+3.1,0.1x^5-1.298x+5.0)");
+		ComplexFunction cf2 = new ComplexFunction(cf1x);
 		System.out.println(cf2);
-		System.out.println("---------------------------");
+		
+		
+		
+		Polynom p0=new Polynom("x+2");
+		Polynom p1=new Polynom("x^2");
+		ComplexFunction c0=new ComplexFunction(Operation.Comp,p0,p1);
+		Polynom p2=new Polynom("5x");
+		ComplexFunction c1=new ComplexFunction(Operation.None,p2,null);
+		ComplexFunction c2=new ComplexFunction(Operation.Plus,c0,c1);
+		Polynom p3=new Polynom("x");
+		ComplexFunction c3=new ComplexFunction(Operation.Max,p1,p3);
+		Polynom p4=new Polynom("3x");
+		Polynom p5=new Polynom("3");
+		ComplexFunction c4=new ComplexFunction(Operation.Divid,p4,p5);
+		ComplexFunction c5=new ComplexFunction(Operation.Min,c3,c4);
+		ComplexFunction c6=new ComplexFunction(Operation.Times,c2,c5);
+		ComplexFunction c=(ComplexFunction)c6.initFromString("mul(plus(comp(x+2,x^2),none(5x,null)),min(max(x^2,x),div(3x,3)))");
+		assertEquals(c6,c);
+		assertThrows( RuntimeException.class,() -> cf[0].initFromString("plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5.5 -1.2999999999999998x +5.0)"));//power type of double
+		assertThrows( RuntimeException.class,() -> cf[0].initFromString("plus(-1.0x^4 +2.4x^2 +3.1+0.1x^5 -1.2999999999999998x +5.0)"));//wrong structure 
+		assertThrows( RuntimeException.class,() -> cf[0].initFromString("plus(-1.0x^4 +2.4x^2 +3.1+0.1x^5 -1.2999999999999998x +5.0),()"));//wrong structure
+		assertThrows( RuntimeException.class,() -> cf[0].initFromString("Plus(-1.0x^4 +2.4x^2 +3.1+0.1x^5 -1.2999999999999998x +5.0)"));//plus with capital letter
+		
+		System.out.println("------------******---------------");
+		
+		
+		
 	}
 
 	@Test
 	void testCopy() {
+		
+		function [] actualArr=new ComplexFunction[5];
+		for(int i=0;i<cf.length;i++) 
+		{
+			actualArr[i]=cf[i].copy();	
+		}
+		assertArrayEquals(cf,actualArr);
+		
 		System.out.println("testtttttt copppppyyyyyy");
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
@@ -259,6 +318,15 @@ class ComplexFunctionTest {
 
 	@Test
 	void testPlus() {
+		
+		for(int i=1;i<cf.length;i++)
+		{
+			double expected=cf[i].f(i)+cf[i-1].f(i);
+			cf[i].plus(cf[i-1]);
+			double actual=cf[i].f(i);
+			assertEquals(expected,actual,0.00001);
+		}
+		
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
 		Monom m1 = new Monom("2.01");
@@ -297,6 +365,15 @@ class ComplexFunctionTest {
 
 	@Test
 	void testMul() {
+		
+		for(int i=1;i<cf.length;i++)
+		{
+			double expected=cf[i].f(i)*cf[i-1].f(i);
+			cf[i].mul(cf[i-1]);
+			double actual=cf[i].f(i);
+			assertEquals(expected,actual,0.00001);
+		}
+		
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
 		Monom m1 = new Monom("2.01");
@@ -333,6 +410,16 @@ class ComplexFunctionTest {
 
 	@Test
 	void testDiv() {
+		
+		for(int i=1;i<cf.length;i++)
+		{
+			double expected=cf[i].f(i)/cf[i-1].f(i);
+			cf[i].div(cf[i-1]);
+			double actual=cf[i].f(i);
+			assertEquals(expected,actual,0.00001);
+		}
+		
+		
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
 		Monom m1 = new Monom("2.01");
@@ -369,6 +456,21 @@ class ComplexFunctionTest {
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	@Test
 	void testMax() {
+		
+		for(int i=1;i<cf.length;i++)
+		{
+			
+			double expected=cf[i].f(i);
+			if(cf[i].f(i)<cf[i-1].f(i))
+			{
+				expected=cf[i-1].f(i);
+			}
+			cf[i].max(cf[i-1]);
+			double actual=cf[i].f(i);
+			assertEquals(expected,actual,0.00001);
+		}
+		
+		
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
 		Monom m1 = new Monom("2.01");
@@ -405,6 +507,19 @@ class ComplexFunctionTest {
 
 	@Test
 	void testMin() {
+		
+		for(int i=1;i<cf.length;i++)
+		{		
+			double expected=cf[i].f(i);
+			if(cf[i].f(i)>cf[i-1].f(i))
+			{
+				expected=cf[i-1].f(i);
+			}
+			cf[i].min(cf[i-1]);
+			double actual=cf[i].f(i);
+			assertEquals(expected,actual,0.00001);
+		}
+		
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
 		Monom m1 = new Monom("2.01");
@@ -441,6 +556,15 @@ class ComplexFunctionTest {
 
 	@Test
 	void testComp() {
+		
+		for(int i=1;i<cf.length;i++)
+		{
+			double expected=cf[i].f(cf[i-1].f(i));
+			cf[i].comp(cf[i-1]);
+			double actual=cf[i].f(i);
+			assertEquals(expected,actual,0.00001);
+		}
+		
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
 		Monom m1 = new Monom("2.01");
@@ -477,27 +601,75 @@ class ComplexFunctionTest {
 
 	@Test
 	void testLeft() {
-
+		function [] actualArr=new ComplexFunction[5];
+		actualArr[0]=new ComplexFunction("-1.0x^4 +2.4x^2 +3.1");
+		actualArr[1]=new ComplexFunction("plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x+5.0)");
+		actualArr[2]=new ComplexFunction("2x^2+4+5x^3");
+		actualArr[3]=new ComplexFunction("-1.0x^4 +2.4x^2 +3.1");
+		actualArr[4]=new ComplexFunction("min(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x+5.0)");
+		for(int i=0;i<cf.length;i++) 
+		{
+			assertEquals(cf[i].left(),actualArr[i]);
+		}
 	}
 
 	@Test
 	void testRight() {
-
+		
+		function [] actualArr=new ComplexFunction[5];
+		actualArr[0]=new ComplexFunction("+0.1x^5 -1.2999999999999998x +5.0");
+		actualArr[1]=new ComplexFunction("-1.0x^4 +2.4x^2 +3.1");
+		actualArr[2]=new ComplexFunction("1");
+		actualArr[3]=null;
+		actualArr[4]=new ComplexFunction("-1.0x^4 +2.4x^2 +3.1");
+		for(int i=0;i<cf.length;i++) 
+		{
+			assertEquals(cf[i].right(),actualArr[i]);
+		}
 	}
 
 	@Test
 	void testGetOp() {
+		
+		Operation [] actualArr= {Operation.Comp,Operation.Divid,Operation.Times,Operation.None,Operation.Max};
+		Operation [] expectedArr=new Operation [5];
+		for(int i=0;i<cf.length;i++) 
+		{
+			expectedArr[i]=cf[i].getOp();
+		}
+		assertArrayEquals(expectedArr,actualArr);
+		
 
 	}
 
 	@Test
 	void testToString() {
 		
+		
+		
 
 	}
 	
 	@Test
 	void testequals() {
+		
+		ComplexFunction cf0=new ComplexFunction("mul(x,x)");
+		ComplexFunction cf1=new ComplexFunction("mul(x^2,1)");
+		assertTrue(cf1.equals(cf0));
+		ComplexFunction cf2=new ComplexFunction("plus(3x,4x)");
+		ComplexFunction cf3=new ComplexFunction("mul(x,7)");
+		assertTrue(cf3.equals(cf2));
+		ComplexFunction cf4=new ComplexFunction("plus(3x+2,4x)");
+		assertFalse(cf4.equals(cf3));
+		Object p0=new Polynom("7x+2");	
+		assertTrue(cf4.equals(p0));
+		Object m0=new Monom("3x^2");
+		ComplexFunction cf5=new ComplexFunction("3x^2");
+		ComplexFunction cf6=new ComplexFunction("none(3x^2,null)");
+		assertTrue(cf6.equals(m0));
+		assertTrue(cf5.equals(m0));
+		
+		
 		System.out.println("***testequals:***");
 		try {
 		Monom m1 = new Monom("x");

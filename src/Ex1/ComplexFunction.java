@@ -354,10 +354,11 @@ public class ComplexFunction implements complex_function {
 	 */
 	@Override
 	public function initFromString(String s) {
-
+		try {
 		if(!s.contains(",")) {
 			function func;
-			if(s.contains(" ")) {
+			if(s.equals("null")) {return null;}
+			else if(s.contains(" ")) {
 				func = new Polynom(s.replaceAll(" ", ""));
 			}else {
 				func = new Polynom(s);
@@ -371,18 +372,30 @@ public class ComplexFunction implements complex_function {
 		int j = 0;
 		String right_side = "";
 		String op_str = "";
-
-		while(s.charAt(i) != ',') {
+		int close = 1;
+		int coma =0;
+		
+		while(close != coma) {
+			
+			if(s.charAt(i)== ')') {close++;}
+			if(s.charAt(i)== ',') {coma++;}
+			if(close != coma) {
 			right_side = s.charAt(i)+""+right_side;
+			}
 			i--;
+		
 		}
+		i++;
 		while(s.charAt(j) != '(') {
 			op_str+=s.charAt(j);
 			j++;
 		}
-
+		
+		String a = s.substring(j+1,i);
 		function cf = new ComplexFunction(op_str, initFromString(s.substring(j+1,i)),initFromString(right_side));
-		return cf;
+		return cf;}catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 
 	}
 
