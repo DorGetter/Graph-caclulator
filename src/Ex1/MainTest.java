@@ -49,14 +49,16 @@ public class MainTest {
 //
 //		//fg.drawFunctions();
 //		//fg.drawFunctions(1024, 1024, new Range(-25, 25), new Range(-25, 25), 200);
-		function m0 = new Polynom("0");
-		function m1 = new Polynom("x^3-13x^2-2");
-		function m2 = new Polynom("x^4-2");
-		function m3 = new Polynom("x-2");
-		function m4 = new Polynom("12x-2");
+		function m0 = new Polynom("2x^2");
+		function m11= new Polynom("2x");
+		function m1 = new Polynom("2x^3-13x^2-2");
+		function m2 = new Polynom("-x^4-2");
+		function m3 = new Polynom("-x^8+x^7-2");
+		function m4 = new Polynom("-x^3-2x^2+12x-2");
 		function m5 = new Polynom("x-2x^7");
 
 		function cf12 = new ComplexFunction("div" ,m1,m3);
+		cf12= new ComplexFunction("mult",cf12,m3);
 		System.out.println(cf12.toString());
 
 		Functions_GUI fg = new Functions_GUI();
@@ -68,8 +70,9 @@ public class MainTest {
 		fg.add(m3);
 		fg.add(m4);
 		fg.add(m5);
+		fg.add(m11);
 
-		//fg.drawFunctions();
+		fg.drawFunctions();
 //		ComplexFunction cf13 = fg.get(1);
 //		System.out.println(cf13.toString());
 //
