@@ -219,10 +219,10 @@ public class MainTest {
 				ComplexFunction cf14 = new ComplexFunction("mul(x,x^2)");
 				System.out.println(cf14);
 				
-				fg.saveToFile("test15");
+				//fg.saveToFile("test15");
 				fg1.initFromFile("test15");
-				fg1.drawFunctions();
-				//fg1.drawFunctions("GUI_params.json");
+				//fg1.drawFunctions();
+				fg1.drawFunctions("GUI_params .json");
 				
 
 	}

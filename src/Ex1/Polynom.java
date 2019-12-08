@@ -558,11 +558,14 @@ public class Polynom implements Polynom_able{
 		return poly;
 	}
 	/**
-	 * 
-	 * 
-	 * 
-	 * Add description!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	 */
+	* 						toString function:
+	* The function Return a polynom initialized from string. 
+	* 			
+	*						 Way of action:
+	* *		Using a constructor build from string a new polynom.  
+	* @param s: String from which build a Polynom. 
+	* @return String of the Polynom.     	
+	*/
 	@Override
 	public function initFromString(String s) {
 
