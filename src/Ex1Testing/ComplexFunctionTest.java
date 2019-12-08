@@ -605,7 +605,7 @@ class ComplexFunctionTest {
 		actualArr[0]=new ComplexFunction("-1.0x^4 +2.4x^2 +3.1");
 		actualArr[1]=new ComplexFunction("plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x+5.0)");
 		actualArr[2]=new ComplexFunction("2x^2+4+5x^3");
-		actualArr[3]=new ComplexFunction("-1.0x^4 +2.4x^2 +3.1");
+		actualArr[3]=new ComplexFunction("-1.0x^4 +2.4x^2+3.1");
 		actualArr[4]=new ComplexFunction("min(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x+5.0)");
 		for(int i=0;i<cf.length;i++) 
 		{
@@ -617,7 +617,7 @@ class ComplexFunctionTest {
 	void testRight() {
 		
 		function [] actualArr=new ComplexFunction[5];
-		actualArr[0]=new ComplexFunction("+0.1x^5 -1.2999999999999998x +5.0");
+		actualArr[0]=new ComplexFunction("+0.1x^5-1.2999999999999998x +5.0");
 		actualArr[1]=new ComplexFunction("-1.0x^4 +2.4x^2 +3.1");
 		actualArr[2]=new ComplexFunction("1");
 		actualArr[3]=null;
@@ -638,16 +638,11 @@ class ComplexFunctionTest {
 			expectedArr[i]=cf[i].getOp();
 		}
 		assertArrayEquals(expectedArr,actualArr);
-		
-
+	
 	}
 
 	@Test
 	void testToString() {
-		
-		
-		
-
 	}
 	
 	@Test

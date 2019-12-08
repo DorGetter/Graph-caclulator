@@ -229,11 +229,16 @@ public class Monom implements function{
 	 */
 	public void add(Monom m) {
 		Monom_Comperator q = new Monom_Comperator();
-		if(q.compare(m, new Monom(_coefficient,_power))==0) {
+		if(this.toString() == "0") {
+			this._coefficient = m._coefficient;
+			this._power = m._power;
+			return;
+		}
+		else if(q.compare(m, new Monom(_coefficient,_power))==0) {
 			this._coefficient += m._coefficient;
 		}
 		else {
-			throw new RuntimeErrorException(null, "Different Powers- cant add");
+			throw new RuntimeErrorException(null, "Different Powers - can't add");
 		}
 	}
 	/**

@@ -79,11 +79,13 @@ public class Polynom implements Polynom_able{
 	 */
 	public Polynom(String s) {
 		String temp = "";																	//Will contain the monoms during passing on the S- input string
-		
+		s = s.replaceAll(" ", "");
 		if(s == "") {
 			throw new RuntimeException("Empty string");
 		}else if(s.charAt(0)== '+') {
 			s = s.substring(1,s.length());
+		}else if(s.contains("+-") || s.contains("-+") ) {
+			throw new RuntimeException("Not a valid polynom");
 		}
 		
 		for (int i = 0; i < s.length(); i++) {
@@ -299,7 +301,9 @@ public class Polynom implements Polynom_able{
 			if(polylist.size() > 1) {
 				return false;
 			}else {
-				if(polylist.get(0).toString()== p1.toString()) {
+				String temp = polylist.get(0).toString();
+				String temp2 = p1.toString();
+				if(temp.equals(temp2)) {
 					return true;
 				}
 				else

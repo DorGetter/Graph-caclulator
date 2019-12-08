@@ -263,8 +263,10 @@ public class ComplexFunction implements complex_function {
 	public ComplexFunction(String func) {
 		
 		ComplexFunction temp = new ComplexFunction();
-		function a = temp.initFromString(func);
-		this.left = a;
+		ComplexFunction a = temp.initFromString_comp(func);
+		this.left = a.left;
+		this.right = a.right;
+		this.op = a.op;
 		
 	}
 
@@ -684,4 +686,51 @@ public class ComplexFunction implements complex_function {
 		return true;
 	}
 
+	private ComplexFunction initFromString_comp(String s) {
+		
+		try {
+		if(!s.contains(",")) {
+			function func;
+			if(s.equals("null")) {return null;}
+			else if(s.contains(" ")) {
+				func = new Polynom(s.replaceAll(" ", ""));
+			}else {
+				func = new Polynom(s);
+			}
+			return new ComplexFunction(func);
+		}
+
+		String temp ="";
+		int i =0;
+		i = s.length()-2;
+		int j = 0;
+		String right_side = "";
+		String op_str = "";
+		int close = 1;
+		int coma =0;
+		
+		while(close != coma) {
+			
+			if(s.charAt(i)== ')') {close++;}
+			if(s.charAt(i)== ',') {coma++;}
+			if(close != coma) {
+			right_side = s.charAt(i)+""+right_side;
+			}
+			i--;
+		
+		}
+		i++;
+		while(s.charAt(j) != '(') {
+			op_str+=s.charAt(j);
+			j++;
+		}
+		
+		String a = s.substring(j+1,i);
+		ComplexFunction cf = new ComplexFunction(op_str, initFromString(s.substring(j+1,i)),initFromString(right_side));
+		return  cf;}catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+
+	}
+	
 }

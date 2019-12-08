@@ -22,6 +22,10 @@ public class MainTest {
 		ComplexFunction c=(ComplexFunction)c6.initFromString("mul(plus(comp(x+2,x^2),none(5x,null)),min(max(x^2,x),div(3x,3)))");
 		ComplexFunction css=(ComplexFunction)c6.initFromString("mul(plus(div(x,x),plus(2x,2x)),4x)");
 		
+		Polynom p1 = new Polynom("x^2");
+		System.out.println(p1);
+		ComplexFunction a = new ComplexFunction("div(x^2,13)");
+		
 //		function m0 = new Polynom("0");
 //		function m1 = new Polynom("x^3-13x^2-2");
 //		function m2 = new Polynom("x^4-2");
