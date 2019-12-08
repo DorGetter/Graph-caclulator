@@ -1,4 +1,4 @@
-OOP - Project Ex1: ComplexFunction&Polynom&Monom.
+## OOP - Project Ex1: ComplexFunction&Polynom&Monom.
 ----------------
 Editors: Dor Getter & Omeri Rugi
 Ariel university -Object-Oriented Programming course task 1.
