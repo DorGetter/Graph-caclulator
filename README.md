@@ -11,7 +11,13 @@ Ariel university -Object-Oriented Programming course task 1.
 
 
 #  About the project:
-This project is built to create and use Polynoms and Monom's mathematical expressions using given interfaces. The program allows building Monoms And Polynoms objects, either with a String or by creating a new object which stands the characteristics of a valid polynomial expression. The user of this project can add, subtract, multiply and derivate Monoms and Polynomials expressions. Also, the user can find the root of a Polynomial expression in a close interval and sum the blocked area between the polynomial function and the positive x-axis using Riemann's Integral.
+This project is built to create and use Polynoms and Monom's mathematical expressions using given interfaces.
+
+The program allows building Monoms And Polynoms objects, either with a String or by creating a new object which stands the characteristics of a valid polynomial expression.
+
+The user of this project can add, subtract, multiply and derivate Monoms and Polynomials expressions. 
+
+Also, the user can find the root of a Polynomial expression in a close interval and sum the blocked area between the polynomial function and the positive x-axis using Riemann's Integral.
 # Monom Class
 
 Class info:  This class represents a Monom mathematical expression. Valid Monom objects is in the form of ax^b.
@@ -43,32 +49,53 @@ Methods implemented:
 •	multiply(num)-multiply the monom by a number.
 
 •	toString-returns the String of the given Monom. 
+
 •	equals-check wither 2 Monoms logically equal.		
 ________________________________________
 # Polynom Class:
-________________________________________
+
 Class info: This class represents a Polynom objects that is build from ArraryList data structure of Monom objects.
 Polynom class works as follows:
+
+
 •	Receiving a String containing "Polynom" / Monom OBJ.
+
 •	case 1: Breaks down the String into separate Monoms- and add separately to an ArrayList that will contain the Polynom.
+
 •	case 2: received a Monom OBJ. and adds it to a Polynom ArrayList.
+
 Methods implemented:
+
 •	Polynom(String)-Constructor.
+
 •	f-Place x in the polynom.
+
 •	add(Polynom_able)-Adding two Polynom_able objects into one.
+
 •	add(Monom)-Adding Monom into the Polynom.
+
 •	substruct(Polnom_able) -Substruction of two Polnoms.
+
 •	multiply-Multiplying two Polynoms.
+
 •	equals-Check if two Polynoms are equal- by deviation of Epsilon.
+
 •	isZero-Check if Polynom is equal to zero.			
+
 •	root-Calculate the point which the Polynom==zero between x0,x1 with deviation of Epsilon.
+
 •	Copy-Crates deep copy of Polynom.
+
 •	Derivativ-Derivative the Polynom.
+
 •	area-Calculates the area size between the function to positive x axis.
+
 •	multiply-Multiply Polynom by Monom.
+
 •	Iterator-Returns Iterator from Class Iterator.
+
 •	toString-Returns a String of the Polynom.
-________________________________________
+
 # Complex Function class:
 ________________________________________
 
