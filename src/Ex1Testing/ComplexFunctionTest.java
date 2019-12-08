@@ -5,9 +5,11 @@ import Ex1.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Random;
 import java.util.function.Function;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,9 +18,55 @@ class ComplexFunctionTest {
 
 	ComplexFunction cf0,cf1,cf2,cf3,cf4,cf5;
 	ComplexFunction [] cf;
+	ComplexFunction [] complist;
+	Polynom [] polylist;
+	Monom [] monolist;
+	String [] str;
+	
 	@BeforeEach
 	void setUp() throws Exception
 	{
+		complist = new ComplexFunction[5];
+		polylist = new Polynom[5];
+		monolist = new Monom[5];
+		str = new String[5];
+		double start = -50;
+		double end = 50;
+		for (int i = 0; i < 5; i++) {
+			double random = new Random().nextDouble();
+			double result = start + (random * (end - start));
+			str[i] = result+"x^";
+		}
+		
+		for (int i = 0; i < 5; i++) {
+			int random = new Random().nextInt(9 + 1)+1;
+			str[i] =str[i]+""+random;
+		}
+		
+		for (int i = 0; i < 5; i++) {
+			monolist[i] = new Monom(str[i]);
+		}
+		
+		for (int i = 0; i <5; i++) {
+			int random = new Random().nextInt(4 + 1);
+			polylist[i] = new Polynom();
+			polylist[i].add(monolist[random]);
+			polylist[i].add(monolist[random]);
+		}
+		
+		for (int i = 0; i <5; i++) {
+			int random = new Random().nextInt(4 + 1);
+			complist[i] = new ComplexFunction(polylist[random]);
+			complist[i].comp(polylist[random]);
+		}
+		
+		for (int i = 0; i <5; i++) {
+			int random = new Random().nextInt(4 + 1);
+			complist[i].plus(monolist[random]);
+		}
+		
+		
+		
 		cf=new ComplexFunction[5];
 		cf0=new ComplexFunction("comp(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x +5.0)");
 		cf1=new ComplexFunction("div(plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5 -1.2999999999999998x+5.0),-1.0x^4 +2.4x^2 +3.1)");
@@ -35,25 +83,37 @@ class ComplexFunctionTest {
 	@AfterEach
 	void tearDown() throws Exception
 	{
-		for(int i=0;i<cf.length;i++) 
+		for(int i=0;i<cf.length;i++) {
+			polylist[i]=null;
+			monolist[i]=null;
+			str[i]=null;
 			cf[i]=null;
+		}
+			
 	}
 
 	@Test
 	void testComplexFunctionFunction() {
 		
-		Polynom expected0=new Polynom("3x^2-7x+9");
-		ComplexFunction actual0=new ComplexFunction(expected0);
-		assertEquals(expected0.f(5),actual0.f(5),0.00001);
-		Polynom expected1=new Polynom("6x^3-25x+70");
-		ComplexFunction actual1=new ComplexFunction(expected1);
-		assertEquals(expected1.f(5),actual1.f(5),0.00001);
-		Monom expected2=new Monom("15x^2");
-		ComplexFunction actual2=new ComplexFunction(expected2);
-		assertEquals(expected2.f(5),actual2.f(5),0.00001);
-		Monom expected3=new Monom("-8.5x");
-		ComplexFunction actual3=new ComplexFunction(expected3);
-		assertEquals(expected3.f(5),actual3.f(5),0.00001);
+		
+		ComplexFunction [] test = new ComplexFunction[5];
+		for (int i = 0; i < 5; i++) {
+			test[i] = new ComplexFunction(complist[i]);
+			assertEquals(test[i], complist[i]);
+		}
+		
+		test = new ComplexFunction[5];
+		for (int i = 0; i < test.length; i++) {
+			test[i] = new ComplexFunction(polylist[i]);
+			assertEquals(test[i], polylist[i]);
+		}
+		
+		test = new ComplexFunction[5];
+		for (int i = 0; i < test.length; i++) {
+			test[i] = new ComplexFunction(monolist[i]);
+			assertEquals(test[i], monolist[i]);
+		}
+		
 		
 		
 		try {
@@ -75,40 +135,34 @@ class ComplexFunctionTest {
 
 	@Test
 	void testComplexFunctionStringFunctionFunction() {
-
-		ComplexFunction [] actual=new ComplexFunction[5];
-		Polynom p0=new Polynom("-1.0x^4+2.4x^2+3.1");
-		Polynom p1=new Polynom("0.1x^5-1.2999999999999998x+5.0");
-		String op1="comp";
-		actual[0]=new ComplexFunction(op1,p0,p1);
-		ComplexFunction temp=new ComplexFunction("plus",p0,p1);
-		actual[1]=new ComplexFunction("div",temp,p0);
-		Polynom p2=new Polynom("2x^2+4+5x^3");
-		Monom m0=new Monom("1");
-		actual[2]=new ComplexFunction("mul",p2,m0);
-		actual[3]=new ComplexFunction("none",new Polynom("-1.0x^4+2.4x^2+3.1"),null);
-		ComplexFunction temp1=new ComplexFunction("min",p0,p1);
-		actual[4]=new ComplexFunction("max",temp1,p0);
-		for(int i=0;i<cf.length;i++)
-		{
-			//assertEquals(cf[i].toString(),actual[i].toString());
+		
+		ComplexFunction [] test = new ComplexFunction[5];
+		for (int i = 0; i < test.length; i++) {
+			Operation op = complist[i].getOp();
+			function left = complist[i].left();
+			function right = complist[i].right();
+			String op_str = ""+op;
+			test[i] = new ComplexFunction(op_str,left,right);
 		}
 		
+		for (int i = 0; i < test.length; i++) {
+			assertEquals(complist[i], test[i]);
+		}
 		
 		try {
 			String s1 = "3.1+2.4x^2-x^4";
 			String s2 = "5 +2x-3.3x+0.1x^5";
-			p1 = new Polynom(s1);
-			p2 = new Polynom(s2);
+			Polynom p1 = new Polynom(s1);
+			Polynom p2 = new Polynom(s2);
 			ComplexFunction cf = new ComplexFunction("Plus", p1, p2);
 			ComplexFunction cf4 = new ComplexFunction("div", new Polynom("x+1"), cf);
 		} catch (Exception e) {
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
 
 		try {
-			p2 = new Polynom("0");
+			Polynom p2 = new Polynom("0");
 			ComplexFunction cf4 = new ComplexFunction("div", new Polynom("x+1"), p2);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -125,40 +179,24 @@ class ComplexFunctionTest {
 	@Test
 	void testComplexFunctionOperationFunctionFunction() {
 		
-		try {
-			ComplexFunction [] actual=new ComplexFunction[5];
-			Polynom p0=new Polynom("-1.0x^4+2.4x^2+3.1");
-			Polynom p1=new Polynom("0.1x^5-1.2998x+5.0");
-			actual[0]=new ComplexFunction(Operation.Comp,p0,p1);
-			ComplexFunction temp=new ComplexFunction(Operation.Plus,p0,p1);
-			actual[1]=new ComplexFunction(Operation.Divid,temp,p0);
-			Polynom p2=new Polynom("2x^2+4+5x^3");
-			Monom m0=new Monom("1");
-			actual[2]=new ComplexFunction(Operation.Times,p2,m0);
-			actual[3]=new ComplexFunction(Operation.None,new Polynom("-1.0x^4+2.4x^2+3.1"),null);
-			ComplexFunction temp1=new ComplexFunction(Operation.Min,p0,p1);
-			actual[4]=new ComplexFunction(Operation.Max,temp1,p0);
-			for(int i=0;i<cf.length;i++)
-			{
-				System.out.println("+++++++++++++++++"+i);
-				assertEquals(cf[i],actual[i]);
-				
-			}
-		} catch (Exception e) {
-			
-			System.out.println(e);
-			e.printStackTrace();
-			fail();
+		ComplexFunction [] test = new ComplexFunction[5];
+		for (int i = 0; i < test.length; i++) {
+			Operation op = complist[i].getOp();
+			function left = complist[i].left();
+			function right = complist[i].right();
+			test[i] = new ComplexFunction(op,left,right);
 		}
-		
-		
+		for (int i = 0; i < test.length; i++) {
+			assertEquals(complist[i], test[i]);
+		}	
+			
 		try {
 			Polynom p = new Polynom("x^2+22+11x");
 			Monom m1 = new Monom("x^3");
-			ComplexFunction test = new ComplexFunction(Operation.Plus, p, m1);
+			ComplexFunction temp = new ComplexFunction(Operation.Plus, p, m1);
 			System.out.println(test);
 			function f1 = new Monom("x^33");
-			ComplexFunction test2 = new ComplexFunction(Operation.Divid, test,f1);
+			ComplexFunction test2 = new ComplexFunction(Operation.Divid, temp,f1);
 			System.out.println(test2);
 		}catch (Exception e) {
 			System.out.println(e);
@@ -170,117 +208,117 @@ class ComplexFunctionTest {
 
 	@Test
 	void testF() {
-		double [] expectedArr={-905.0856,-0.696969,52,-3.3,-3.3};
-		double [] actualArr=new double[5];
-		for(int i=0;i<cf.length;i++) 
-		{
-			actualArr[i]=cf[i].f(2);	
-			assertEquals("testing f:",expectedArr[i],actualArr[i],0.00001);
+
+
+		ComplexFunction [] test = new ComplexFunction[5];
+		for (int i = 0; i < test.length; i++) {
+			int random = new Random().nextInt(4 + 1);
+			test[i] = new ComplexFunction(Operation.Plus,polylist[i],polylist[i]);
+			double temp = test[i].f(random);
+			double temp2 = polylist[i].f(random)+polylist[i].f(random);
+			if (temp != temp2) {
+				fail();
+			}
+		}
+		
+		ComplexFunction [] test2 = new ComplexFunction[5];
+		for (int i = 0; i < test.length; i++) {
+			int random = new Random().nextInt(4 + 1);
+			test2[i] = new ComplexFunction(Operation.Times,polylist[i],polylist[i]);
+			double temp = test2[i].f(random);
+			double temp2 = polylist[i].f(random)*polylist[i].f(random);
+			if (temp != temp2) {
+				fail();
+			}
+		}
+		
+		ComplexFunction [] test3 = new ComplexFunction[5];
+		
+		for (int i = 0; i < test3.length; i++) {
+			int random = new Random().nextInt(4 + 1);
+			test3[i] = new ComplexFunction(polylist[i]);
+			for (int j = 0; j < test3.length; j++) {
+				test3[i].plus(test2[j]);
+				test3[i].div(test[j]);
+				
+			}
+			test3[i].f(1);
 		}
 		
 		
-		System.out.println("fffffffffffff(x)");
 		Polynom p1 = new Polynom("5x");
 		Polynom p2 = new Polynom("3x");
 		Monom m1 = new Monom("2");
 		Monom m2 = new Monom("1");
-		System.out.println("f-*");
-		///////////////////////////////////////////////////
+
 		try {
-			System.out.println("*******");
 			ComplexFunction cf1 = new ComplexFunction(p1);
 			System.out.println(cf1);
 			cf1.mul(p2);
 			System.out.println(cf1);
-			System.out.println("*******");
 			System.out.println(cf1.f(1));
 
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
 
 		try {
-			System.out.println("*******");
+
 			ComplexFunction cf1 = new ComplexFunction("mul",p1,m1);
 			System.out.println(cf1);
 			cf1.mul(p2);
 			System.out.println(cf1);
-			System.out.println("*******");
 			System.out.println(cf1.f(1));
 
 		}catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
-		///////////////////end mul///////////////////////////
 		try {
-			System.out.println("*******");
+
 			ComplexFunction cf1 = new ComplexFunction(p1);
 			System.out.println(cf1);
 			cf1.div(p2);
 			System.out.println(cf1);
-			System.out.println("*******");
 			System.out.println(cf1.f(1));
 
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
 
 		try {
-			System.out.println("*******");
 			ComplexFunction cf1 = new ComplexFunction("div",p1,m1);
 			System.out.println(cf1);
 			cf1.div(p2);
 			System.out.println(cf1);
-			System.out.println("*******");
 			System.out.println(cf1.f(1));
 
 		}catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
 
 	}
 
 	@Test
 	void testInitFromString() {
-		System.out.println("--------------testInitFromString-------------");
+		
 		Polynom a = new Polynom("0");
 		ComplexFunction cfx = new ComplexFunction(a);
 		function cf1x = cfx.initFromString("plus(-1.0x^4+2.4x^2+3.1,0.1x^5-1.298x+5.0)");
 		ComplexFunction cf2 = new ComplexFunction(cf1x);
-		System.out.println(cf2);
-		
-		
-		
-		Polynom p0=new Polynom("x+2");
-		Polynom p1=new Polynom("x^2");
-		ComplexFunction c0=new ComplexFunction(Operation.Comp,p0,p1);
-		Polynom p2=new Polynom("5x");
-		ComplexFunction c1=new ComplexFunction(Operation.None,p2,null);
-		ComplexFunction c2=new ComplexFunction(Operation.Plus,c0,c1);
-		Polynom p3=new Polynom("x");
-		ComplexFunction c3=new ComplexFunction(Operation.Max,p1,p3);
-		Polynom p4=new Polynom("3x");
-		Polynom p5=new Polynom("3");
-		ComplexFunction c4=new ComplexFunction(Operation.Divid,p4,p5);
-		ComplexFunction c5=new ComplexFunction(Operation.Min,c3,c4);
-		ComplexFunction c6=new ComplexFunction(Operation.Times,c2,c5);
-		ComplexFunction c=(ComplexFunction)c6.initFromString("mul(plus(comp(x+2,x^2),none(5x,null)),min(max(x^2,x),div(3x,3)))");
-		assertEquals(c6,c);
-		assertThrows( RuntimeException.class,() -> cf[0].initFromString("plus(-1.0x^4 +2.4x^2 +3.1,+0.1x^5.5 -1.2999999999999998x +5.0)"));//power type of double
-		assertThrows( RuntimeException.class,() -> cf[0].initFromString("plus(-1.0x^4 +2.4x^2 +3.1+0.1x^5 -1.2999999999999998x +5.0)"));//wrong structure 
-		assertThrows( RuntimeException.class,() -> cf[0].initFromString("plus(-1.0x^4 +2.4x^2 +3.1+0.1x^5 -1.2999999999999998x +5.0),()"));//wrong structure
-		assertThrows( RuntimeException.class,() -> cf[0].initFromString("Plus(-1.0x^4 +2.4x^2 +3.1+0.1x^5 -1.2999999999999998x +5.0)"));//plus with capital letter
-		
-		System.out.println("------------******---------------");
-		
+		assertEquals(cf2.toString(), cf1x.toString());
+		ComplexFunction temp = new ComplexFunction("x");
+		assertThrows( RuntimeException.class,() -> temp.initFromString("plus(3.1x,11x^5.5)"));
+		assertThrows( RuntimeException.class,() -> temp.initFromString("plus(33x^2+19)"));
+		assertThrows( RuntimeException.class,() -> temp.initFromString("plus(x^7),()"));
+		assertThrows( RuntimeException.class,() -> temp.initFromString("Divi(-1.0x^4,2)"));
 		
 		
 	}
@@ -294,38 +332,23 @@ class ComplexFunctionTest {
 			actualArr[i]=cf[i].copy();	
 		}
 		assertArrayEquals(cf,actualArr);
-		
-		System.out.println("testtttttt copppppyyyyyy");
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
 		Monom m1 = new Monom("2.01");
 		Monom m2 = new Monom("1");
 		try {
 		ComplexFunction cf1 = new ComplexFunction(p1);
-		System.out.println(cf1);
-		
 		ComplexFunction cf2 = (ComplexFunction) cf1.copy();
-		System.out.println(cf2);
-		
-		
-		
 		}catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
 	}
 
 	@Test
 	void testPlus() {
 		
-		for(int i=1;i<cf.length;i++)
-		{
-			double expected=cf[i].f(i)+cf[i-1].f(i);
-			cf[i].plus(cf[i-1]);
-			double actual=cf[i].f(i);
-			assertEquals(expected,actual,0.00001);
-		}
 		
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
@@ -333,31 +356,27 @@ class ComplexFunctionTest {
 		Monom m2 = new Monom("1");
 		System.out.println("+");
 		try {
-			System.out.println("*******");
 			ComplexFunction cf1 = new ComplexFunction(p1);
 			System.out.println(cf1);
 			cf1.plus(p2);
 			System.out.println(cf1);
-			System.out.println("*******");
 
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
 
 		try {
-			System.out.println("*******");
 			ComplexFunction cf1 = new ComplexFunction(Operation.Plus,p1,m1);
 			System.out.println(cf1);
 			cf1.plus(p2);
 			System.out.println(cf1);
-			System.out.println("*******");
 
 		}catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
 
 
@@ -365,110 +384,77 @@ class ComplexFunctionTest {
 
 	@Test
 	void testMul() {
-		
-		for(int i=1;i<cf.length;i++)
-		{
-			double expected=cf[i].f(i)*cf[i-1].f(i);
-			cf[i].mul(cf[i-1]);
-			double actual=cf[i].f(i);
-			assertEquals(expected,actual,0.00001);
-		}
+
 		
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
 		Monom m1 = new Monom("2.01");
 		Monom m2 = new Monom("1");
-		System.out.println("*");
+
 		try {
-			System.out.println("*******");
+
 			ComplexFunction cf1 = new ComplexFunction(p1);
 			System.out.println(cf1);
 			cf1.mul(p2);
 			System.out.println(cf1);
-			System.out.println("*******");
 
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
 
 		try {
-			System.out.println("*******");
+
 			ComplexFunction cf1 = new ComplexFunction("mul",p1,m1);
 			System.out.println(cf1);
-			cf1.mul(p2);
 			System.out.println(cf1);
-			System.out.println("*******");
 
 		}catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
 	}
 
 	@Test
 	void testDiv() {
 		
-		for(int i=1;i<cf.length;i++)
-		{
-			double expected=cf[i].f(i)/cf[i-1].f(i);
-			cf[i].div(cf[i-1]);
-			double actual=cf[i].f(i);
-			assertEquals(expected,actual,0.00001);
-		}
-		
 		
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
 		Monom m1 = new Monom("2.01");
 		Monom m2 = new Monom("1");
-		System.out.println("/");
+
 		try {
-			System.out.println("*******");
+
 			ComplexFunction cf1 = new ComplexFunction(p1);
 			System.out.println(cf1);
 			cf1.div(p2);
 			System.out.println(cf1);
-			System.out.println("*******");
 
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
 
 		try {
-			System.out.println("*******");
 			ComplexFunction cf1 = new ComplexFunction("div",p1,m1);
 			System.out.println(cf1);
 			cf1.div(p2);
 			System.out.println(cf1);
-			System.out.println("*******");
 
 		}catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
 	}
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	@Test
 	void testMax() {
 		
-		for(int i=1;i<cf.length;i++)
-		{
-			
-			double expected=cf[i].f(i);
-			if(cf[i].f(i)<cf[i-1].f(i))
-			{
-				expected=cf[i-1].f(i);
-			}
-			cf[i].max(cf[i-1]);
-			double actual=cf[i].f(i);
-			assertEquals(expected,actual,0.00001);
-		}
 		
 		
 		Polynom p1 = new Polynom("55.446x");
@@ -481,8 +467,6 @@ class ComplexFunctionTest {
 			ComplexFunction cf1 = new ComplexFunction(p1);
 			System.out.println(cf1);
 			cf1.max(p2);
-			System.out.println(cf1);
-			System.out.println("*******");
 
 		} catch (Exception e) {
 			System.out.println(e);

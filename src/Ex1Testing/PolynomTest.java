@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import Ex1.ComplexFunction;
 import Ex1.Monom;
 import Ex1.Polynom;
+import Ex1.Polynom_able;
+import Ex1.function;
 
 class PolynomTest {
 	
@@ -66,12 +68,6 @@ class PolynomTest {
 		}
 	}
 	
-	
-	
-	@Test
-	void testPolynom() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	void testPolynomString() {
@@ -157,27 +153,56 @@ class PolynomTest {
 
 	@Test
 	void testIsZero() {
-		fail("Not yet implemented");
+		boolean[] expectedArr= {true,false,false,false,false};
+		boolean[] actualArr= new boolean[5];
+		for(int i=0;i<pol.length;i++) 
+		{
+			actualArr[i]=pol[i].isZero();
+		}
+		assertArrayEquals(expectedArr,actualArr);
 	}
 
 	@Test
 	void testRoot() {
-		fail("Not yet implemented");
+		Polynom p1=new Polynom("x^2");
+		Polynom p2=new Polynom("x^2-1");
+		assertEquals(-1,p2.root(-1, 1, 0.0000001),0.0000001);
+		assertThrows( RuntimeException.class,() -> p2.root(1, -1, 0.0000001));
+		assertThrows( RuntimeException.class,() -> p2.root(2, 3, 0.0000001));
 	}
 
 	@Test
 	void testCopy() {
-		fail("Not yet implemented");
+		function [] actualArr=new Polynom_able[5];
+		
+		for(int i=0;i<pol.length;i++) 
+		{
+			actualArr[i]=pol[i].copy();
+		}
+		assertArrayEquals(pol,actualArr);
 	}
 
 	@Test
 	void testDerivative() {
-		fail("Not yet implemented");
+		Polynom[] expectedArr= {new Polynom("0"),new Polynom("2x+1"),new Polynom("5x^4-1.5"),new Polynom("-15x^2"),new Polynom("0")};
+		Polynom_able[] actualArr=new Polynom_able[5];
+		for(int i=0;i<pol.length;i++) 
+		{
+			actualArr[i]=pol[i].derivative();
+		}
+		assertArrayEquals(expectedArr,actualArr);
 	}
 
 	@Test
 	void testArea() {
-		fail("Not yet implemented");
+		double[] expectedArr= {0,2.66,0.58,18.05,2};
+		double[] actualArr= new double[5];
+		for(int i=0;i<pol.length;i++) 
+		{
+			actualArr[i]=pol[i].area(-1,1,0.01);
+			System.out.println(actualArr[i]);
+			assertEquals("testing f:",expectedArr[i],actualArr[i],0.01);
+		}
 	}
 
 	@Test
@@ -191,19 +216,21 @@ class PolynomTest {
 		assertArrayEquals(expectedArr,pol);
 	}
 
-	@Test
-	void testIteretor() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	void testToString() {
-		fail("Not yet implemented");
+		assertEquals("0",pol[0].toString());
+		assertEquals("x^2+x+1.0",pol[1].toString());
+		assertEquals("x^5-1.5x",pol[2].toString());
+		assertEquals("-5.0x^3+9.0",pol[3].toString());
 	}
 
 	@Test
 	void testInitFromString() {
-		fail("Not yet implemented");
+		function f1 = pol[1].initFromString("x^2+x+1.0");
+		assertEquals(pol[1],f1);
+		
+		
 	}
 
 }
