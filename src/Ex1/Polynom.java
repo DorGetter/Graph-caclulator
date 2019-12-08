@@ -374,8 +374,9 @@ public class Polynom implements Polynom_able{
 	public double root(double x0, double x1, double eps) {
 		
 		if(eps<=0||eps>x1-x0) {throw new RuntimeException("EPSILON unvalid input");}		//Check valid eps input
+		else if(x0>x1) { throw new RuntimeException("x0 cannot be greater then x1");}
 		else if (this.f(x0)*this.f(x1)>0) {													//Check if the function cuts the x axis.
-			throw new RuntimeException("Function Doesnt Rooted In Given Interval");			//If dosen't have will throw an exception.
+			 throw new RuntimeException("Function dosn't rooted in given interval");
 		}else if(this.f(x0)==0) {
 			return x0;
 		}else if(this.f(x1)==0) {

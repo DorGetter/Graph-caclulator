@@ -679,7 +679,6 @@ public class ComplexFunction implements complex_function {
 			} 
 			catch (Exception e) {}
 		}
-		System.out.println(counter_Of_Match);
 		if ((Range*2)-counter_Of_Match>10)
 			return false;
 
