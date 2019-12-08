@@ -3,12 +3,6 @@
 Editors: Dor Getter & Omeri Rugi
 Ariel university -Object-Oriented Programming course task 1.
 
-**Table of contents**
-
-
-[TOC]
-
-
 
 #  About the project:
 This project is built to create and use mathematical function expressions using given interfaces.
