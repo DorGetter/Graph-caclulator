@@ -527,7 +527,6 @@ public class ComplexFunction implements complex_function {
 	@Override
 	public void max(function f) {
 		function f1 = f.copy();
-
 		function new_left = this.copy();
 		this.left = new_left;
 		this.right = f1;

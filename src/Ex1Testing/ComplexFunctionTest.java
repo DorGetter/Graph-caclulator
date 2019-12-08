@@ -35,6 +35,7 @@ class ComplexFunctionTest {
 		for (int i = 0; i < 5; i++) {
 			double random = new Random().nextDouble();
 			double result = start + (random * (end - start));
+			
 			str[i] = result+"x^";
 		}
 		
@@ -326,12 +327,13 @@ class ComplexFunctionTest {
 	@Test
 	void testCopy() {
 		
-		function [] actualArr=new ComplexFunction[5];
-		for(int i=0;i<cf.length;i++) 
-		{
-			actualArr[i]=cf[i].copy();	
+		
+		ComplexFunction [] test = new ComplexFunction[5];
+		for (int i = 0; i < test.length; i++) {
+			test[i] = (ComplexFunction) complist[i].copy();
+			assertEquals(test[i], complist[i]);
 		}
-		assertArrayEquals(cf,actualArr);
+		
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
 		Monom m1 = new Monom("2.01");
@@ -350,6 +352,20 @@ class ComplexFunctionTest {
 	void testPlus() {
 		
 		
+		ComplexFunction [] test = new ComplexFunction[5]; 
+		for (int i = 0; i < cf.length; i++) {
+			int random1 = new Random().nextInt(4 + 1);
+			int random2 = new Random().nextInt(4 + 1);
+			test[i] = new ComplexFunction(Operation.Plus,polylist[random1],polylist[random2]);
+			double t1 = test[i].f(10);
+			double t2 = polylist[random1].f(10)+polylist[random2].f(10);
+			if(t1 != t2) {
+				fail();
+			}
+			
+		}
+		
+	
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
 		Monom m1 = new Monom("2.01");
@@ -385,6 +401,46 @@ class ComplexFunctionTest {
 	@Test
 	void testMul() {
 
+		ComplexFunction [] test = new ComplexFunction[5]; 
+		for (int i = 0; i < cf.length; i++) {
+			int random1 = new Random().nextInt(4 + 1);
+			int random2 = new Random().nextInt(4 + 1);
+			test[i] = new ComplexFunction(Operation.Times,monolist[random1],monolist[random2]);
+			double t1 = test[i].f(10);
+			double t2 = monolist[random1].f(10)*monolist[random2].f(10);
+			if(t1 != t2) {
+				fail();
+			}
+			
+		}
+		
+		
+		test = new ComplexFunction[5]; 
+		for (int i = 0; i < cf.length; i++) {
+			int random1 = new Random().nextInt(4 + 1);
+			int random2 = new Random().nextInt(4 + 1);
+			test[i] = new ComplexFunction(Operation.Times,polylist[random1],polylist[random2]);
+			double t1 = test[i].f(10);
+			double t2 = polylist[random1].f(10)*polylist[random2].f(10);
+			if(t1 != t2) {
+				fail();
+			}
+			
+		}
+		
+		test = new ComplexFunction[5]; 
+		for (int i = 0; i < cf.length; i++) {
+			int random1 = new Random().nextInt(4 + 1);
+			int random2 = new Random().nextInt(4 + 1);
+			test[i] = new ComplexFunction(Operation.Times,complist[random1],complist[random2]);
+			double t1 = test[i].f(10);
+			double t2 = complist[random1].f(10)*complist[random2].f(10);
+			if(t1 != t2) {
+				fail();
+			}
+			
+		}
+			
 		
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
@@ -419,6 +475,51 @@ class ComplexFunctionTest {
 
 	@Test
 	void testDiv() {
+		
+		
+		ComplexFunction [] test = new ComplexFunction[5]; 
+		for (int i = 0; i < cf.length; i++) {
+			int random1 = new Random().nextInt(4 + 1);
+			int random2 = new Random().nextInt(4 + 1);
+			test[i] = new ComplexFunction(Operation.Divid,monolist[random1],monolist[random2]);
+			try {
+			double t1 = test[i].f(10);
+			double t2 = monolist[random1].f(10)/monolist[random2].f(10);
+			if(t1 != t2) {
+				fail();
+			}}catch (RuntimeException e) {}// if div by zero keep alive
+			
+		}
+		
+		
+		test = new ComplexFunction[5]; 
+		for (int i = 0; i < cf.length; i++) {
+			int random1 = new Random().nextInt(4 + 1);
+			int random2 = new Random().nextInt(4 + 1);
+			test[i] = new ComplexFunction(Operation.Divid,polylist[random1],polylist[random2]);
+			try {
+			double t1 = test[i].f(10);
+			double t2 = polylist[random1].f(10)/polylist[random2].f(10);
+			if(t1 != t2) {
+				fail();
+			}}catch (RuntimeException e) {} // if div by zero keep alive
+			
+		}
+		
+		test = new ComplexFunction[5]; 
+		for (int i = 0; i < cf.length; i++) {
+			int random1 = new Random().nextInt(4 + 1);
+			int random2 = new Random().nextInt(4 + 1);
+			test[i] = new ComplexFunction(Operation.Divid,complist[random1],complist[random2]);
+			try {
+			double t1 = test[i].f(10);
+			double t2 = complist[random1].f(10)/complist[random2].f(10);
+			if(t1 != t2) {
+				fail();
+			}}catch (RuntimeException e) {}// if div by zero keep alive
+			
+		}
+		
 		
 		
 		Polynom p1 = new Polynom("55.446x");
@@ -456,85 +557,81 @@ class ComplexFunctionTest {
 	void testMax() {
 		
 		
-		
+		ComplexFunction c1 = new ComplexFunction("Plus(Times(x,x),8)") ;//9
+		ComplexFunction c2 = new ComplexFunction("Times(Plus(Times(x,x),8),3)") ;
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
+		ComplexFunction c3 = new ComplexFunction(Operation.Max,p1,p2);
+		double temp1 = c3.f(2);
+		if(temp1 != p1.f(2)) { fail();}
+		c3= new ComplexFunction(Operation.Max,c1,c2);
+		temp1 =c3.f(1); 
+		if(temp1 != c2.f(1)) { fail();} 
 		Monom m1 = new Monom("2.01");
 		Monom m2 = new Monom("1");
-		System.out.println("Maximum");
+		
+
 		try {
-			System.out.println("*******");
+
 			ComplexFunction cf1 = new ComplexFunction(p1);
-			System.out.println(cf1);
 			cf1.max(p2);
 
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
 
 		try {
-			System.out.println("*******");
 			ComplexFunction cf1 = new ComplexFunction("max",p1,m1);
-			System.out.println(cf1);
 			cf1.max(p2);
-			System.out.println(cf1);
-			System.out.println("*******");
-
+			
 		}catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}	
 	}
 
 	@Test
 	void testMin() {
-		
-		for(int i=1;i<cf.length;i++)
-		{		
-			double expected=cf[i].f(i);
-			if(cf[i].f(i)>cf[i-1].f(i))
-			{
-				expected=cf[i-1].f(i);
-			}
-			cf[i].min(cf[i-1]);
-			double actual=cf[i].f(i);
-			assertEquals(expected,actual,0.00001);
-		}
-		
+		   
+		ComplexFunction c1 = new ComplexFunction("Plus(Times(x,x),8)") ;//9
+		ComplexFunction c2 = new ComplexFunction("Times(Plus(Times(x,x),8),3)") ;
 		Polynom p1 = new Polynom("55.446x");
 		Polynom p2 = new Polynom("3x^2");
+		ComplexFunction c3 = new ComplexFunction(Operation.Min,p1,p2);
+		double temp1 = c3.f(2);
+		if(temp1 != p2.f(2)) { fail();}
+		c3= new ComplexFunction(Operation.Min,c1,c2);
+		temp1 =c3.f(1); 
+		if(temp1 != c1.f(1)) { fail();} 
+		
+		p1 = new Polynom("55.446x");
+		p2 = new Polynom("3x^2");
 		Monom m1 = new Monom("2.01");
 		Monom m2 = new Monom("1");
-		System.out.println("Minimum");
+	
 		try {
-			System.out.println("*******");
+			
 			ComplexFunction cf1 = new ComplexFunction(p1);
-			System.out.println(cf1);
 			cf1.min(p2);
-			System.out.println(cf1);
-			System.out.println("*******");
 
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
 
 		try {
-			System.out.println("*******");
-			ComplexFunction cf1 = new ComplexFunction("min",p1,m1);
-			System.out.println(cf1);
-			cf1.min(p2);
-			System.out.println(cf1);
-			System.out.println("*******");
 
+			ComplexFunction cf1 = new ComplexFunction("min",p1,m1);
+
+			cf1.min(p2);
 		}catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}	
 	}
 
@@ -553,34 +650,25 @@ class ComplexFunctionTest {
 		Polynom p2 = new Polynom("3x^2");
 		Monom m1 = new Monom("2.01");
 		Monom m2 = new Monom("1");
-		System.out.println("Compute Funcs");
 		try {
-			System.out.println("*******");
+			
 			ComplexFunction cf1 = new ComplexFunction(p1);
-			System.out.println(cf1);
+
 			cf1.comp(p2);
-			System.out.println(cf1);
-			System.out.println("*******");
 
 		} catch (Exception e) {
-			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
+			fail();
 		}
 
 		try {
-			System.out.println("*******");
 			ComplexFunction cf1 = new ComplexFunction("comp",p1,m1);
-			System.out.println(cf1);
 			cf1.comp(p2);
-			System.out.println(cf1);
-			System.out.println("*******");
-
+			
 		}catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
-			fail("Not yet implemented");
-		}	
+			fail();}
 	}
 
 	@Test
