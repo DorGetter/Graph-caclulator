@@ -162,5 +162,9 @@ The class holds the followed methods for draw function from/in different databas
 6) drawFunctions()
 
 
+
+![Annotation 2019-12-08 185054](https://user-images.githubusercontent.com/57187365/70393434-6f66a780-19f2-11ea-9f8f-541a6343f0b8.jpg)
+
+
 @author Omer Rugi && Dor Getter
 
