@@ -97,8 +97,9 @@ Methods implemented:
 •	toString-Returns a String of the Polynom.
 
 
-#Complex function class#
 ________________________________________
+#Complex function class
+
 
  This class represents ComplexFunction OBJECT.
  ComplexFunction is a object inscence of function interface and have the folllowing fields: 
