@@ -9,27 +9,44 @@ Ariel university -Object-Oriented Programming course task 1.
 [TOC]
 
 
-----------------------------------
+
 #  About the project:
 This project is built to create and use Polynoms and Monom's mathematical expressions using given interfaces. The program allows building Monoms And Polynoms objects, either with a String or by creating a new object which stands the characteristics of a valid polynomial expression. The user of this project can add, subtract, multiply and derivate Monoms and Polynomials expressions. Also, the user can find the root of a Polynomial expression in a close interval and sum the blocked area between the polynomial function and the positive x-axis using Riemann's Integral.
 # Monom Class
+
 Class info:  This class represents a Monom mathematical expression. Valid Monom objects is in the form of ax^b.
 in which:
+
+
 •	a- Double type coefficient.
+
+
 •	b- Integer type power.
-the class validates that the inputs are forming a valid Monom, and supports the follows Methods
+
+
+the class validates that the inputs are forming a valid Monom, and supports the follows Methods.
+
 Methods implemented:
+
 •	Monom(String)-Constructor.
-•	Derivative-apply derivative operation.					
-•	f(x)-implement && calculate x the Monom				
-•	IsValidDouble-check the validation of the coefficient.		
+
+•	Derivative-apply derivative operation.	
+
+•	f(x)-implement && calculate x the Monom.
+
+•	IsValidDouble-check the validation of the coefficient.
+
 •	IsValidInt-check the validation of the Power.
+
 •	add-adds up two Monoms.
+
 •	multiply(num)-multiply the monom by a number.
+
 •	toString-returns the String of the given Monom. 
 •	equals-check wither 2 Monoms logically equal.		
 ________________________________________
 # Polynom Class:
+________________________________________
 Class info: This class represents a Polynom objects that is build from ArraryList data structure of Monom objects.
 Polynom class works as follows:
 •	Receiving a String containing "Polynom" / Monom OBJ.
@@ -51,9 +68,9 @@ Methods implemented:
 •	multiply-Multiply Polynom by Monom.
 •	Iterator-Returns Iterator from Class Iterator.
 •	toString-Returns a String of the Polynom.
------------------------------
-#Complex Function class: 
--------------------------
+________________________________________
+# Complex Function class:
+________________________________________
 
  This class represents ComplexFunction OBJECT.
  ComplexFunction is a object inscence of function interface and have the folllowing fields: 
