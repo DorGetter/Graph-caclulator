@@ -20,7 +20,9 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 
-
+/**
+ * @author Dor Getter && Omer Rugi. 
+ */
 public class Functions_GUI implements functions, Serializable {
 
 	@SerializedName("FunctionArry")
@@ -129,37 +131,62 @@ public class Functions_GUI implements functions, Serializable {
 
 		return false;
 	}
-
+/**
+ * return the Draw list size. 
+ */
 	@Override
 	public int size() {
 		return list.size();
 	}
-
+/**
+ * Returns an array containing all of the elements in this list in proper sequence.
+ */
 	@Override
 	public Object[] toArray() {
 		return list.toArray();
 	}
-
+/**
+ * Returns an array containing all of the elements in this list in propersequence (from first to last element); 
+ */
 	@Override
 	public <T> T[] toArray(T[] arg0) {
 		return list.toArray(arg0);
 	}
-
+/**
+ * 							init from file: 
+ * In given file name (by string) the function build Function objects to print in graph. 
+ * Valid inputs:	 full file name as written in the depositors. 	
+ * 
+ *  
+ * 							 Way of action:
+ *  *		Creating FileReader obj. 	 --> Convenience class for reading character files.
+ *  
+ *  **		creating a buffer  		 	 --> Reads text from a character-input stream, buffering characters so 
+ *  										 as to provide for the efficient reading of characters, arrays, and lines.
+ *  
+ *  ***		Using temp string 'readline' --> Reads a line of text. A line is considered to be terminated
+ *  										 by any one of a line feed. covering all lines using while loop.
+ *  
+ *  ****	saving all the lines read by the readline as list (list_temp).
+ *  
+ *  ***** 	save this Draw list array to be the list_temp array read from the file. 
+ * @param file: the file containing objects parameters to print.
+ */
 	@Override
 	public void initFromFile(String file) throws IOException {
 
 		try {
-			FileReader reader = new FileReader(file);
-			BufferedReader buffer = new BufferedReader(reader);
-			ArrayList <function> list_temp =new ArrayList<function>();
-			String readline;
-			readline=buffer.readLine();
+			FileReader reader = new FileReader(file);						//reader.
+			BufferedReader buffer = new BufferedReader(reader);				//buffer. 
+			ArrayList <function> list_temp =new ArrayList<function>();		//hold the list of elements from file. 
+			String readline;												//hold lines from file. 
+			readline=buffer.readLine();										
 			while(readline!=null) 
 			{
-				list_temp.add(new ComplexFunction(readline));
+				list_temp.add(new ComplexFunction(readline));			
 				readline=buffer.readLine();
 			}
-			this.list=list_temp;
+			this.list=list_temp;											//save this list to be the list from file. 
 			buffer.close();
 			reader.close();
 		}catch (Exception e) {
@@ -167,32 +194,66 @@ public class Functions_GUI implements functions, Serializable {
 		}
 	}
 
+/**
+ * 							save to file: 
+ * In given file name (by string) the function save Function objects file. 
+ * Valid inputs:	 full file name as written in the depositors. 	
+ * 
+ *  
+ * 							 Way of action:
+ *  *		Creating FileWriter  obj. 	 --> Convenience class for writing character files.
+ *  
+ *  **		creating PrintWriter obj. 	 --> Prints formatted representations of objects to a text-output stream.
+ *  										 
+ *  
+ *  ***		Using for loop go over all the objects in Draw list array and print them into text file. 
+ *  
+ * @param file: the file to write the obj array into.
+ */	
 	@Override
 	public void saveToFile(String file) throws IOException {
 		try {
 			FileWriter f_writer = new FileWriter(file);
 			PrintWriter p_writer = new PrintWriter(f_writer);
-			for(int i=0;i<list.size();i++) 
+			for(int i=0;i<list.size();i++) 									//go over Draw line array; 
 				p_writer.println(list.get(i).toString());
 			p_writer.close(); 
 			f_writer.close();
 		}catch (Exception e) {
 			throw new IOException();
 		}
-	}
-
+	}	
+/**
+ * 					DrawFunctions (User setting): 
+ * 
+ * Setting GUI window to the user specifications and print the functions contained in the Draw list array.
+ *  
+ * 							 Way of action:
+ *  *		Setting canvas size. 
+ *  **		setting the x and y scale. 
+ *  ***		draws the x,y axis and the x,y measurements numbers.
+ *  ****	draws the functions from the Draw list array - each with specific random color. 
+ *  
+ * @param width		: window width.
+ * @param height	: window height. 
+ * @param rx		: Range of the x axis. (contain [min,max]);
+ * @param ry		: Range of the y axis. (contain [min,max]);
+ * @param resulotion: sets the length between each line while drawing. 
+ */	
 	@Override
 	public void drawFunctions(int width, int height, Range rx, Range ry, int resolution) {
 
 
-		StdDraw.setCanvasSize(width,height);
+		StdDraw.setCanvasSize(width,height);												
 		StdDraw.setXscale(rx.get_min(),rx.get_max());
 		StdDraw.setYscale(ry.get_min(),ry.get_max());
 
-		StdDraw.setPenRadius(0.001);
-		StdDraw.setPenColor(Color.LIGHT_GRAY);
+		StdDraw.setPenRadius(0.001);					
+		StdDraw.setPenColor(Color.LIGHT_GRAY);									//color of slots.
 		
-		for (int i = (int) rx.get_min(); i < rx.get_max(); i++) {
+						//creating slots\\
+		
+		for (int i = (int) rx.get_min(); i < rx.get_max(); i++) {				 
 
 			StdDraw.line(i,(int) ry.get_max(), i,(int) ry.get_min());
 			
@@ -201,7 +262,8 @@ public class Functions_GUI implements functions, Serializable {
 			StdDraw.line((int)rx.get_max(), i, (int) rx.get_min(), i);
 			
 		}
-
+					//draw texts numbers on axis\\
+		
 		StdDraw.setPenRadius(0.00000001);
 		StdDraw.setPenColor(Color.BLACK);
 		for (int i = (int) Math.min(rx.get_min(), ry.get_min()); i <(int)  Math.max(rx.get_max(), ry.get_max()); i++) {
@@ -211,11 +273,10 @@ public class Functions_GUI implements functions, Serializable {
 				StdDraw.text(0.5, i, ""+i);
 
 		}
-
 		StdDraw.setPenRadius(0.004);
-		
 		StdDraw.setPenColor(StdDraw.BLACK);
-
+		
+					//creating the x,y axis\\
 		StdDraw.line(rx.get_min(), 0, rx.get_max(), 0);
 		StdDraw.line(0, ry.get_min(), 0, ry.get_max());
 
@@ -223,16 +284,18 @@ public class Functions_GUI implements functions, Serializable {
 		
 		StdDraw.setPenRadius(0.002);
 
+			//give random color to function using RGB\\
 		for (int j = 0; j < list.size(); j++) {
 			int r= (int) (Math.random()*244);
 			int g= (int) (Math.random()*244);
 			int b= (int) (Math.random()*244);
 
-			System.out.println(r+" "+g+ " "+b);
-
+			System.out.println("java.awt.Color[r="+r+",g="+g+",b="+b+"] f(x)="+list.get(j));
+			//draw the functions from the Draw list- according to scale && resolution\\ 
 			for (double i = rx.get_min(); i < rx.get_max()+1; i+=rx.get_max()/resolution) {
 				StdDraw.setPenColor(r, g, b);
 				try {
+					
 					if(ry.isIn(list.get(j).f(i)) ||ry.isIn(list.get(j).f(i+0.1)) ) {
 						StdDraw.line(i, list.get(j).f(i), i+0.1, list.get(j).f(i+0.1));
 					}
@@ -240,15 +303,30 @@ public class Functions_GUI implements functions, Serializable {
 
 				}
 			}
+
 		}
 
 	}
 
+/**
+ * 				DrawFunctions (settings Window GUI from file): 
+ * 
+ * Setting GUI window specifications from file and print the functions contained in the Draw list array.
+ *  
+ * 							 Way of action:
+ *  *		Creating a Gson obj 	--> Read Json files. 
+ *  **		Creating Filereader obj --> Convenience class for reading character files.
+ *  ***		Creating GUI_Window obj -->  This method deserializes the Json read from the specified
+ *  									 parse tree into an object of the specified type. 
+ *  ****	Setting the window range fields using the Json file parameters. 
+ *  *****	Setting the window width height and resolution.  
+ * @param Json_File	: Json text file contain object to get window GUI specifications from.
+ */	
 	@Override
 	public void drawFunctions(String json_file) {
 
 		Gson gson = new Gson();
-
+ 
 		try 
 		{
 			FileReader reader = new FileReader(json_file);
@@ -260,31 +338,41 @@ public class Functions_GUI implements functions, Serializable {
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
 	}
-
+/**
+ * 					DrawFunctions (defualt printing): 
+ * 
+ * Printing the functions in the Draw list array in default settings. 
+ *  
+ * 							 Way of action:
+ *	*		Setting canvas size. 
+ *  **		setting the x and y scale. 
+ *  ***		draws the x,y axis and the x,y measurements numbers.
+ *  ****	draws the functions from the Draw list array - each with specific random color. 
+ */
 	public void drawFunctions() {
-
+		//setting canvas size and x,y axis parameters\\ 
 		int width = 1024;
 		int height = 1024;
 		Range rx = new Range(-25,25);
 		Range ry = new Range(-25,25);
 		int resolution = 2000;
+		
 		StdDraw.setCanvasSize(width,height);
-
-
+		
 		StdDraw.setXscale(rx.get_min(),rx.get_max());
 		StdDraw.setYscale(ry.get_min(),ry.get_max());
 
 		StdDraw.setPenRadius(0.001);
 		StdDraw.setPenColor(Color.LIGHT_GRAY);
+			//creating slots\\
 		for (int i = -99; i < 99; i++) {
 
 			StdDraw.line(i, 100, i, -100);
 			StdDraw.line(100, i, -100, i);
 
 		}
-
+		//draw texts numbers on axis\\
 		StdDraw.setPenRadius(0.00000001);
 		StdDraw.setPenColor(Color.BLACK);
 		for (int i = -99; i < 99; i++) {
@@ -297,21 +385,21 @@ public class Functions_GUI implements functions, Serializable {
 
 		StdDraw.setPenRadius(0.004);
 		StdDraw.setPenColor(StdDraw.BLACK);
-
+		//draw the x,y axis\\
 		StdDraw.line(rx.get_min(), 0, rx.get_max(), 0);
 		StdDraw.line(0, ry.get_min(), 0, ry.get_max());
 
 
-		function p1 = new Polynom("5");
+		
 		StdDraw.setPenRadius(0.002);
-
+		//give random color to function using RGB\\
 		for (int j = 0; j < list.size(); j++) {
 			int r= (int) (Math.random()*244);
 			int g= (int) (Math.random()*244);
 			int b= (int) (Math.random()*244);
-
-			System.out.println(r+" "+g+ " "+b);
-
+			
+			System.out.println("java.awt.Color[r="+r+",g="+g+",b="+b+"] f(x)="+list.get(j));
+			//printing functions\\
 			for (double i = rx.get_min(); i < rx.get_max()+1; i+=rx.get_max()/resolution) {
 				StdDraw.setPenColor(r, g, b);
 				if(ry.isIn(list.get(j).f(i)) ||ry.isIn(list.get(j).f(i+0.5)) ) {
@@ -321,7 +409,21 @@ public class Functions_GUI implements functions, Serializable {
 		}
 
 	}
-
+/**
+ * 							Get i:
+ * 
+ * * Function returns the object in the Draw list array as a ComplexFunction type.  
+ * 			
+ * 			Valid inputs:	 int in range of the Draw list array. 
+ * 
+ *  
+ * 							 Way of action:
+ *  *		Checking the object type. 
+ *  ** 		According to type returning a ComplexFunction object. 
+ *  
+ * @param i :	index in list array.
+ * @return 	:	ComplexFunction in specific index. 
+ */
 	public ComplexFunction get(int i) {
 		try {
 			if (list.get(i) instanceof Polynom_able || list.get(i) instanceof Monom ) {
@@ -336,7 +438,12 @@ public class Functions_GUI implements functions, Serializable {
 		}
 		return null;
 	}
-
+////////////////////////////////////////////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+	
+	/**
+	 * Class contains the Gui_Function parameters. 
+	 * @author Dor Getter && Omer Rugi
+	 */
 	public class GUI_Window 
 	{
 
@@ -353,10 +460,7 @@ public class Functions_GUI implements functions, Serializable {
 				this.Range_X[i]=Range_X[i];
 				this.Range_Y[i]=Range_Y[i];
 			}
-			//			this.Range_X[0]=Range_X[0];
-			//			this.Range_X[1]=Range_X[1];
-			//			this.Range_Y[0]=Range_Y[0];
-			//			this.Range_Y[1]=Range_Y[1];
+			
 			this.Height=height;
 			this.Width=width;
 			this.Resolution=resolution;

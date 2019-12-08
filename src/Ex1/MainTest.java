@@ -49,6 +49,27 @@ public class MainTest {
 //
 //		//fg.drawFunctions();
 //		//fg.drawFunctions(1024, 1024, new Range(-25, 25), new Range(-25, 25), 200);
+		function m0 = new Polynom("0");
+		function m1 = new Polynom("x^3-13x^2-2");
+		function m2 = new Polynom("x^4-2");
+		function m3 = new Polynom("x-2");
+		function m4 = new Polynom("12x-2");
+		function m5 = new Polynom("x-2x^7");
+
+		function cf12 = new ComplexFunction("div" ,m1,m3);
+		System.out.println(cf12.toString());
+
+		Functions_GUI fg = new Functions_GUI();
+		Functions_GUI fg1 = new Functions_GUI();
+		fg.add(m0);
+		fg.add(cf12);
+		fg.add(m1);
+		fg.add(m2);
+		fg.add(m3);
+		fg.add(m4);
+		fg.add(m5);
+
+		//fg.drawFunctions();
 //		ComplexFunction cf13 = fg.get(1);
 //		System.out.println(cf13.toString());
 //
