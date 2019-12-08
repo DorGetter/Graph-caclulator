@@ -96,7 +96,8 @@ Methods implemented:
 
 •	toString-Returns a String of the Polynom.
 
-# Complex Function class:
+
+#Complex function class#
 ________________________________________
 
  This class represents ComplexFunction OBJECT.
