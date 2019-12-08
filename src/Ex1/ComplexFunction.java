@@ -38,7 +38,7 @@ import com.google.gson.annotations.SerializedName;
  * ----------------------------------------------------------------------------------------------------------------------
  * Legit C.F will Contain only operations from the list below, and will be construct from objects which implements 		|
  * 'Function'.																											|
- * Valid operations: Plus, Times, Divid, Max, Min, Comp , None, Error													|
+ * Valid operations: Plus, plus, Times, mul, Divid, div, Max, max, Min, min, Comp , None, Error							|
  * ----------------------------------------------------------------------------------------------------------------------
  * 									
  * @author DorGetter && OmerRugi
@@ -468,7 +468,7 @@ public class ComplexFunction implements complex_function {
 	/**
 		div function: 
 	 *	Given a C.F and a function object sets a new C.F which will hold the old C.F on the
-	new function object as left and the new function object to the right.  
+		new function object as left and the new function object to the right.  
 	 * 	
 	 * 		* Valid inputs: function type obj. 
 	 *  
@@ -495,7 +495,7 @@ public class ComplexFunction implements complex_function {
 	/**
 		max function: 
 	 *	Given a C.F and a function object sets a new C.F which will hold the old C.F on the
-	new function object as left and the new function object to the right.  
+		new function object as left and the new function object to the right.  
 	 * 	
 	 * 		* Valid inputs: function type obj. 
 	 *  

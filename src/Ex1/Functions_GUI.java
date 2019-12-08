@@ -26,7 +26,9 @@ public class Functions_GUI implements functions, Serializable {
 	@SerializedName("FunctionArry")
 	ArrayList<function> list = new ArrayList<function>();
 
-
+/**
+ * adding a function to the Draw list array;
+ */
 	@Override
 	public boolean add(function arg0) {
 		try {
@@ -37,32 +39,47 @@ public class Functions_GUI implements functions, Serializable {
 			throw new RuntimeException("Unable to add " + arg0.toString());
 		}
 	}
-
+	
+/**
+ * add all the functions in a collection to Draw list array;
+ * returns true if all the collections is successfully transfer into the Draw list array; 
+ */
 	@Override
 	public boolean addAll(Collection<? extends function> arg0) {
 		if (list.addAll(arg0)) return true;
 
 		return false;
 	}
-
+/**
+ * clear the Draw list array; 
+ */
 	@Override
 	public void clear() {
 		list.clear();
 
 	}
-
+/**
+ * check if an function is contained in the Draw list array; 
+ * return true if function in Draw list; 
+ */
 	@Override
 	public boolean contains(Object arg0) {
 		if(list.contains(arg0)) return true;
 		return false;
 	}
-
+/**
+ * check if all the collection is contain within the Draw list array; 
+ * return true if contain;
+ */
 	@Override
 	public boolean containsAll(Collection<?> arg0) {
 		if(list.containsAll(arg0)) return true;
 		return false;
 	}
-
+/**
+ * check if the Draw list array is empty; 
+ * return true if the list is empty;
+ */
 	@Override
 	public boolean isEmpty() {
 		if (list.isEmpty()) {
@@ -71,25 +88,41 @@ public class Functions_GUI implements functions, Serializable {
 		return false;
 	}
 
+/**
+ * Draw list iterator; 
+ * return the list array iterator; 
+ */
 	@Override
 	public Iterator<function> iterator() {
 		return list.iterator();
 	}
-
+/**
+ * Removing an object from Draw list array; 
+ * return true if the object successfully removed.
+ */
 	@Override
 	public boolean remove(Object arg0) {
+		try {
 		if(list.remove(arg0)) return true ;
-
+		}catch (Exception e) {
+			throw new RuntimeException("the object does not on list.");
+		}
 		return false;
 	}
-
+/**
+ * remove all the input collection functions from the Draw list array; 
+ * return true if the object successfully removed.
+ */
 	@Override
 	public boolean removeAll(Collection<?> arg0) {
 		if(list.removeAll(arg0)) return true; 
 
 		return false;
 	}
-
+/**
+ * removes from this collection all of its elements that are not contained in the specified collection; 
+ * return true if successfully retain. 
+ */
 	@Override
 	public boolean retainAll(Collection<?> arg0) {
 		if(list.retainAll(arg0)) return true; 
