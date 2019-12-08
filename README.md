@@ -54,6 +54,12 @@ Methods implemented:
 ________________________________________
 # Polynom Class:
 
+
+
+
+
+
+
 Class info: This class represents a Polynom objects that is build from ArraryList data structure of Monom objects.
 Polynom class works as follows:
 
@@ -97,7 +103,7 @@ Methods implemented:
 •	toString-Returns a String of the Polynom.
 
 
-________________________________________
+________________________________________\
 #Complex function class
 
 
