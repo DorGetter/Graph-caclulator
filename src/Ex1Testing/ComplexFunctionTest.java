@@ -490,7 +490,7 @@ class ComplexFunctionTest {
 			}}catch (RuntimeException e) {}// if div by zero keep alive
 			
 		}
-		
+
 		
 		test = new ComplexFunction[5]; 
 		for (int i = 0; i < cf.length; i++) {
