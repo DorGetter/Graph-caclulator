@@ -502,6 +502,7 @@ public class Polynom implements Polynom_able{
 			Monom temp = new Monom(polylist.get(i));
 			temp.multipy(m1);	
 			polylist.set(i, temp);
+			if(temp.isZero()) {polylist.remove(i);}
 		}
 
 	}
@@ -526,6 +527,7 @@ public class Polynom implements Polynom_able{
 	* 
 	* @return String of the Polynom.     	
 	*/
+	@Override
 	public String toString() {
 
 		String poly ="";
@@ -575,7 +577,6 @@ public class Polynom implements Polynom_able{
 	public function initFromString(String s) {
 
 		function p1 = new Polynom(s);
-		
 		return p1;
 	}
 	

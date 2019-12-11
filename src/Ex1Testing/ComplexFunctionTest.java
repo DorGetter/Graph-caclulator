@@ -1,3 +1,4 @@
+
 package Ex1Testing;
 
 import Ex1.*;
@@ -109,7 +110,6 @@ class ComplexFunctionTest {
 			ComplexFunction cf1 = new ComplexFunction(p1);
 			ComplexFunction cf2 = new ComplexFunction(p2);
 			ComplexFunction cf3 = new ComplexFunction(p3);
-			System.out.println(cf3);
 		}catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
@@ -153,13 +153,7 @@ class ComplexFunctionTest {
 			System.out.println(e);
 		}
 
-		Polynom test1 = new Polynom("x+1");
-		Monom m1 = new Monom("1");
-		System.out.println(m1);
-		System.out.println(test1);
-
 	}
-
 
 	@Test
 	void testComplexFunctionOperationFunctionFunction() {
@@ -179,10 +173,10 @@ class ComplexFunctionTest {
 			Polynom p = new Polynom("x^2+22+11x");
 			Monom m1 = new Monom("x^3");
 			ComplexFunction temp = new ComplexFunction(Operation.Plus, p, m1);
-			System.out.println(test);
+			
 			function f1 = new Monom("x^33");
 			ComplexFunction test2 = new ComplexFunction(Operation.Divid, temp,f1);
-			System.out.println(test2);
+		
 		}catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
@@ -238,10 +232,7 @@ class ComplexFunctionTest {
 
 		try {
 			ComplexFunction cf1 = new ComplexFunction(p1);
-			System.out.println(cf1);
 			cf1.mul(p2);
-			System.out.println(cf1);
-			System.out.println(cf1.f(1));
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -252,10 +243,7 @@ class ComplexFunctionTest {
 		try {
 
 			ComplexFunction cf1 = new ComplexFunction("mul",p1,m1);
-			System.out.println(cf1);
 			cf1.mul(p2);
-			System.out.println(cf1);
-			System.out.println(cf1.f(1));
 
 		}catch (Exception e) {
 			System.out.println(e);
@@ -265,10 +253,8 @@ class ComplexFunctionTest {
 		try {
 
 			ComplexFunction cf1 = new ComplexFunction(p1);
-			System.out.println(cf1);
+		
 			cf1.div(p2);
-			System.out.println(cf1);
-			System.out.println(cf1.f(1));
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -278,10 +264,8 @@ class ComplexFunctionTest {
 
 		try {
 			ComplexFunction cf1 = new ComplexFunction("div",p1,m1);
-			System.out.println(cf1);
+			
 			cf1.div(p2);
-			System.out.println(cf1);
-			System.out.println(cf1.f(1));
 
 		}catch (Exception e) {
 			System.out.println(e);
@@ -304,6 +288,8 @@ class ComplexFunctionTest {
 		assertThrows( RuntimeException.class,() -> temp.initFromString("plus(33x^2+19)"));
 		assertThrows( RuntimeException.class,() -> temp.initFromString("plus(x^7),()"));
 		assertThrows( RuntimeException.class,() -> temp.initFromString("Divi(-1.0x^4,2)"));
+		function temp1 = temp.initFromString("plus(3.1x,+11x^5)");
+		function temp2 = temp.initFromString("Max(Max(Max(Max(Plus(-1.0x^4+ 2.4x^2 + 3.1,+0.1x^5-1.2999999999999998x+5.0),Plus(Divid(x+1.0,Times(Times(x+3.0,x-2.0),x-4.0)), +2.0)),Divid(Plus(-1.0x^4+2.4x^2+3.1, 0.1x^5-1.2999999999999998x+5.0),-1.0x^4+2.4x^2+3.1)),-1.0x^4+2.4x^2+3.1),0.1x^5-1.2999999999999998x+5.0)");
 		
 		
 	}
@@ -354,13 +340,10 @@ class ComplexFunctionTest {
 		Polynom p2 = new Polynom("3x^2");
 		Monom m1 = new Monom("2.01");
 		Monom m2 = new Monom("1");
-		System.out.println("+");
+	
 		try {
 			ComplexFunction cf1 = new ComplexFunction(p1);
-			System.out.println(cf1);
 			cf1.plus(p2);
-			System.out.println(cf1);
-
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();
@@ -369,9 +352,7 @@ class ComplexFunctionTest {
 
 		try {
 			ComplexFunction cf1 = new ComplexFunction(Operation.Plus,p1,m1);
-			System.out.println(cf1);
 			cf1.plus(p2);
-			System.out.println(cf1);
 
 		}catch (Exception e) {
 			System.out.println(e);
@@ -434,9 +415,9 @@ class ComplexFunctionTest {
 		try {
 
 			ComplexFunction cf1 = new ComplexFunction(p1);
-			System.out.println(cf1);
+			
 			cf1.mul(p2);
-			System.out.println(cf1);
+		
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -447,8 +428,6 @@ class ComplexFunctionTest {
 		try {
 
 			ComplexFunction cf1 = new ComplexFunction("mul",p1,m1);
-			System.out.println(cf1);
-			System.out.println(cf1);
 
 		}catch (Exception e) {
 			System.out.println(e);
@@ -473,6 +452,10 @@ class ComplexFunctionTest {
 				fail();
 			}}catch (RuntimeException e) {}// if div by zero keep alive
 			
+			ComplexFunction temp = new ComplexFunction(Operation.Divid,new Polynom("257x^4"),new Polynom("3x^2"));
+			ComplexFunction temp2 = new ComplexFunction(new Polynom("85.6666667x^2"));
+			if (temp.f(1)!=85.66666666666667) {fail();}
+			if(!(temp.equals(temp2))) {fail();}
 		}
 
 		
@@ -514,9 +497,7 @@ class ComplexFunctionTest {
 		try {
 
 			ComplexFunction cf1 = new ComplexFunction(p1);
-			System.out.println(cf1);
 			cf1.div(p2);
-			System.out.println(cf1);
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -526,9 +507,7 @@ class ComplexFunctionTest {
 
 		try {
 			ComplexFunction cf1 = new ComplexFunction("div",p1,m1);
-			System.out.println(cf1);
 			cf1.div(p2);
-			System.out.println(cf1);
 
 		}catch (Exception e) {
 			System.out.println(e);

@@ -106,11 +106,15 @@ public class Monom implements function{
 	 */
 
 	public Monom(String s) {
-
-		if(s == "") { // an empty string case.
+		s = s.replaceAll(" ", "");
+		if(s.charAt(0) == '+') {
+			s = s.substring(1,s.length());
+		}
+		if(s.isEmpty()) { // an empty string case.
 			throw new RuntimeErrorException(null, "Empty string");
 		}
-
+		s = s.toLowerCase();
+		
 		int i =0; 						// i=char index
 		String coefficient_str = ""; 	// catch the coefficient subString
 		double coefficient_temp =0;  	// temp that will contain the coefficient.
@@ -142,7 +146,7 @@ public class Monom implements function{
 		}
 		//case of only a number. 
 		if(i == s.length()) {_coefficient = coefficient_temp; return;}
-		
+		else if(coefficient_temp == 0) {_coefficient = coefficient_temp; return;}
 		//case of power eq to 1. ex: "2x".
 		else if(i== s.length()-1 && s.charAt(i)== 'x') {
 			_coefficient = coefficient_temp;
@@ -212,7 +216,7 @@ public class Monom implements function{
 	private boolean isValidInt(String s) {
 
 		try { 
-			if(Integer.parseInt(s)>0)
+			if(Integer.parseInt(s)>=0)
 				return true;
 			else 
 				throw new RuntimeErrorException(null,s+ " "+ "not valid int");

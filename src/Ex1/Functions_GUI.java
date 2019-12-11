@@ -155,7 +155,7 @@ public class Functions_GUI implements functions, Serializable {
 /**
  * 							init from file: 
  * In given file name (by string) the function build Function objects to print in graph. 
- * Valid inputs:	 full file name as written in the depositors. 	
+ * Valid inputs:	 full file name as written in the depositors.,  .txt files Only.  	
  * 
  *  
  * 							 Way of action:
@@ -176,11 +176,14 @@ public class Functions_GUI implements functions, Serializable {
 	public void initFromFile(String file) throws IOException {
 
 		try {
+			File tempFile = new File(file);
+			boolean exists = tempFile.exists();
+			if(!exists) {throw new IOException();}							// if file not exists.
 			FileReader reader = new FileReader(file);						//reader.
 			BufferedReader buffer = new BufferedReader(reader);				//buffer. 
 			ArrayList <function> list_temp =new ArrayList<function>();		//hold the list of elements from file. 
 			String readline;												//hold lines from file. 
-			readline=buffer.readLine();										
+			readline=buffer.readLine();							
 			while(readline!=null) 
 			{
 				list_temp.add(new ComplexFunction(readline));			
@@ -197,7 +200,8 @@ public class Functions_GUI implements functions, Serializable {
 /**
  * 							save to file: 
  * In given file name (by string) the function save Function objects file. 
- * Valid inputs:	 full file name as written in the depositors. 	
+ * Valid inputs:	 full file name as written in the depositors.   	
+ * 
  * 
  *  
  * 							 Way of action:
@@ -206,17 +210,20 @@ public class Functions_GUI implements functions, Serializable {
  *  **		creating PrintWriter obj. 	 --> Prints formatted representations of objects to a text-output stream.
  *  										 
  *  
- *  ***		Using for loop go over all the objects in Draw list array and print them into text file. 
+ *  ***		Using for loop go over all the objects in Draw list array and print them into .txt file. 
  *  
  * @param file: the file to write the obj array into.
  */	
 	@Override
 	public void saveToFile(String file) throws IOException {
+		
 		try {
-			FileWriter f_writer = new FileWriter(file);
-			PrintWriter p_writer = new PrintWriter(f_writer);
-			for(int i=0;i<list.size();i++) 									//go over Draw line array; 
+			File tempFile = new File(file);
+			FileWriter f_writer = new FileWriter(file);			
+			PrintWriter p_writer = new PrintWriter(file);
+			for(int i=0;i<list.size();i++) {
 				p_writer.println(list.get(i).toString());
+			}
 			p_writer.close(); 
 			f_writer.close();
 		}catch (Exception e) {
@@ -279,9 +286,6 @@ public class Functions_GUI implements functions, Serializable {
 					//creating the x,y axis\\
 		StdDraw.line(rx.get_min(), 0, rx.get_max(), 0);
 		StdDraw.line(0, ry.get_min(), 0, ry.get_max());
-
-
-		
 		StdDraw.setPenRadius(0.002);
 
 			//give random color to function using RGB\\
@@ -294,14 +298,11 @@ public class Functions_GUI implements functions, Serializable {
 			//draw the functions from the Draw list- according to scale && resolution\\ 
 			for (double i = rx.get_min(); i < rx.get_max()+1; i+=rx.get_max()/resolution) {
 				StdDraw.setPenColor(r, g, b);
-				try {
-					
+				try {	
 					if(ry.isIn(list.get(j).f(i)) ||ry.isIn(list.get(j).f(i+0.1)) ) {
 						StdDraw.line(i, list.get(j).f(i), i+0.1, list.get(j).f(i+0.1));
 					}
-				}catch (Exception e) {
-
-				}
+				}catch (Exception e) {}
 			}
 
 		}
@@ -329,13 +330,20 @@ public class Functions_GUI implements functions, Serializable {
  
 		try 
 		{
+			File tempFile = new File(json_file);
+			boolean exists = tempFile.exists();
+			if(!exists) {
+				System.out.println( json_file+" Dosn't exists");
+				this.drawFunctions();
+				return;
+				}									//if file not exists.
 			FileReader reader = new FileReader(json_file);
 			GUI_Window window = gson.fromJson(reader,GUI_Window.class);
 			Range rx=new Range(window.Range_X[0],window.Range_X[1]);
 			Range ry=new Range(window.Range_Y[0],window.Range_Y[1]);
 			this.drawFunctions(window.Width, window.Height, rx, ry, window.Resolution);
 		} 
-		catch (FileNotFoundException e) {
+		catch (FileNotFoundException e) {	
 			e.printStackTrace();
 		}
 	}
@@ -352,11 +360,11 @@ public class Functions_GUI implements functions, Serializable {
  */
 	public void drawFunctions() {
 		//setting canvas size and x,y axis parameters\\ 
-		int width = 1024;
-		int height = 1024;
-		Range rx = new Range(-25,25);
-		Range ry = new Range(-25,25);
-		int resolution = 2000;
+		int width = 1000;
+		int height = 600;
+		Range rx = new Range(-10,10);
+		Range ry = new Range(-5,15);
+		int resolution = 200;
 		
 		StdDraw.setCanvasSize(width,height);
 		
@@ -365,26 +373,33 @@ public class Functions_GUI implements functions, Serializable {
 
 		StdDraw.setPenRadius(0.001);
 		StdDraw.setPenColor(Color.LIGHT_GRAY);
+			
 			//creating slots\\
-		for (int i = -99; i < 99; i++) {
+		
 
-			StdDraw.line(i, 100, i, -100);
-			StdDraw.line(100, i, -100, i);
-
+		for (int i = (int) rx.get_min(); i < rx.get_max(); i++) {				 
+			StdDraw.line(i,(int) ry.get_max(), i,(int) ry.get_min());
 		}
+		for (int i =(int) ry.get_min() ; i < ry.get_max(); i++) {
+			StdDraw.line((int)rx.get_max(), i, (int) rx.get_min(), i);	
+		}
+
 		//draw texts numbers on axis\\
+		
 		StdDraw.setPenRadius(0.00000001);
 		StdDraw.setPenColor(Color.BLACK);
-		for (int i = -99; i < 99; i++) {
-			StdDraw.text(i, -1, ""+i);
+		for (int i = (int) Math.min(rx.get_min(), ry.get_min()); i <(int)  Math.max(rx.get_max(), ry.get_max()); i++) {
+			StdDraw.text(i, -0.5, ""+i);
 			if (i==0) {}
 			else
-				StdDraw.text(1, i, ""+i);
+				StdDraw.text(0.5, i, ""+i);
 
 		}
+
 
 		StdDraw.setPenRadius(0.004);
 		StdDraw.setPenColor(StdDraw.BLACK);
+		
 		//draw the x,y axis\\
 		StdDraw.line(rx.get_min(), 0, rx.get_max(), 0);
 		StdDraw.line(0, ry.get_min(), 0, ry.get_max());
@@ -402,9 +417,11 @@ public class Functions_GUI implements functions, Serializable {
 			//printing functions\\
 			for (double i = rx.get_min(); i < rx.get_max()+1; i+=rx.get_max()/resolution) {
 				StdDraw.setPenColor(r, g, b);
-				if(ry.isIn(list.get(j).f(i)) ||ry.isIn(list.get(j).f(i+0.5)) ) {
-					StdDraw.line(i, list.get(j).f(i), i+0.5, list.get(j).f(i+0.5));
-				}
+				try {
+					
+				if(ry.isIn(list.get(j).f(i)) ||ry.isIn(list.get(j).f(i+0.1)) ) {
+					StdDraw.line(i, list.get(j).f(i), i+0.1, list.get(j).f(i+0.1));
+				}}catch (Exception e) {System.out.println("de");}
 			}
 		}
 

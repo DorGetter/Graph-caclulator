@@ -674,7 +674,17 @@ public class ComplexFunction implements complex_function {
 			try {
 				if((this.f(i) == x.f(i)) || (this.f(i)+eps == x.f(i)) || (this.f(i) == x.f(i)+eps) ) {
 					counter_Of_Match ++;
-				}		
+				}else if(this.f(i) <= x.f(i)) {
+					
+					if(this.f(i) > x.f(i)-eps)
+					{counter_Of_Match ++;}
+					
+					
+				}else if(this.f(i) >= x.f(i)) {
+					
+					if(this.f(i) <= x.f(i)+eps)
+					{counter_Of_Match ++;}
+				}
 			} 
 			catch (Exception e) {}
 		}
