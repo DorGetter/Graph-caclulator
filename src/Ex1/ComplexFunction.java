@@ -219,7 +219,7 @@ public class ComplexFunction implements complex_function {
 			right_side = right_org.copy();
 		}
 		
-
+		if(op == null ) {throw new RuntimeException("Operation null is not valid");}
 		if(op == Operation.None) { 
 
 			if(right_side ==null && left_side==null) {
