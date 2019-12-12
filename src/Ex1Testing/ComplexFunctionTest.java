@@ -1,4 +1,3 @@
-
 package Ex1Testing;
 
 import Ex1.*;
@@ -170,6 +169,7 @@ class ComplexFunctionTest {
 		}	
 			
 		try {
+			
 			Polynom p = new Polynom("x^2+22+11x");
 			Monom m1 = new Monom("x^3");
 			ComplexFunction temp = new ComplexFunction(Operation.Plus, p, m1);
